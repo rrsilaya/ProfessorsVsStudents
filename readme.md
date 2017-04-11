@@ -1,6 +1,12 @@
 # Drop Cap Games
 Drop Cap Games is a collective developer team name for CMSC 22 project.
 
+### Cloning and Development
+* Clone the repository using `git clone https://github.com/rrsilaya/Drop-Cap-Games.git`.
+* **ALWAYS** do `git pull origin <branch>` first before anything else.
+* **NEVER** push to the `master` branch.
+* `git branch <branch>` to your development branch.
+
 ### Coding Rules and Guidelines
 > These coding rules should be HIGHLY implemented for ease of collaboration and code readability.
 1. **NEVER** use soft tabs (spaces as tabs) in your codes. Use *hard tabs*.
