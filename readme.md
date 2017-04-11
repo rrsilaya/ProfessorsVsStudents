@@ -1,4 +1,4 @@
-## Drop Cap Games
+# Drop Cap Games
 Drop Cap Games is a collective developer team name for CMSC 22 project.
 
 ### Coding Rules and Guidelines
@@ -18,8 +18,14 @@ import java.util.Scanner;
 import java.util.Arrays;
 ```
 3. Use proper spaces in your code.
+**Wrong:**
 ```java
-~~for(i=0;i<5;i++){~~
+for(i=0;i<5;i++){
+  System.out.println("Hello world!");
+}
+```
+**Correct:**
+```java
 for(i = 0; i < 5; i++) {
   System.out.println("Hello world!");
 }
