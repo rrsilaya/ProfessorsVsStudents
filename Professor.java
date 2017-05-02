@@ -26,4 +26,8 @@ public abstract class Professor extends GameElement {
 	public boolean canBeHired() {
 		return this.state == this.COOLDOWN ? true : false;
 	}
+
+	public boolean canBeHired(int money) {
+		return this.state == this.COOLDOWN || money >= this.salary ? true : false;
+	}
 }
