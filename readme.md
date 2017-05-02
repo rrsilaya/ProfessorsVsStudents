@@ -4,8 +4,15 @@ Drop Cap Games is a collective developer team name for CMSC 22 project.
 ### Cloning and Development
 * Clone the repository using `git clone https://github.com/rrsilaya/Drop-Cap-Games.git`.
 * **ALWAYS** do `git pull origin backend` first before anything else.
-* **NEVER** push to the `master` branch.
+* **NEVER** push to the `master` branch without consensus to the team.
 * `git branch backend` to your development branch.
+* Instead of running/compiling the codes manually, use the `makefile` included in the project.
+	* `make` to compile the files
+	* `make run` to run the `Main` class
+	* `make clean` to delete compiled classes (retaining the source codes)
+	* `make build` to compile and run at the same time
+* **ALWAYS** do a `make clean` first before pushing files to git.
+* Always check the ***Projects*** tab to know what tasks are left to do, in progress, and done.
 
 ### Coding Rules and Guidelines
 > These coding rules should be HIGHLY implemented for ease of collaboration and code readability.
