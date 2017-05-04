@@ -1,5 +1,7 @@
 package pvs.objects;
 
+import pvs.University;
+
 public class Money {
 	private final static int AMOUNT = 50;
 

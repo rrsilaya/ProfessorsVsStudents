@@ -1,6 +1,6 @@
 package pvs.essentials;
 
-public abstract class Professor extends GameElement {
+public class Professor extends GameElement {
 	protected int salary;
 	protected int state;
 	protected final int COOLDOWN;
