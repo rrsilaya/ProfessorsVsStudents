@@ -8,4 +8,4 @@ clean:
 	rm *.class && rm -rf pvs
 
 build:
-	clear && javac -d . *.java && java Main
+	clear && javac -d . *.java && java Demo
