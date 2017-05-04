@@ -1,6 +1,7 @@
 /* Import Professors vs. Students Library */
 import pvs.University;
 import pvs.essentials.Professor;
+import pvs.objects.Timer;
 
 /* Import Java Native Classes */
 import java.util.Scanner;
@@ -29,5 +30,9 @@ public class Demo {
 		uplb.hireProfessor(0, 0, a);
 		uplb.hireProfessor(0, 1, b);
 		uplb.log();
+
+		Timer timer = new Timer(10);
+		Thread timerthread = new Thread(timer);
+		timerthread.start();
 	}
 }

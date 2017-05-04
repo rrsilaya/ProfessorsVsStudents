@@ -5,6 +5,12 @@ public class Professor extends GameElement {
 	protected int state;
 	protected final int COOLDOWN;
 
+	// Professor Types
+	protected final static String TITA = "Tita";
+	protected final static String TALKER = "Talker";
+	protected final static String WATER = "Water Thrower";
+	protected final static String COFFEE = "Coffee Maker";
+
 	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type,
 		int salary, int cooldown) {
 		super(hitPoints, dmgPoints, atkSpeed, type);
