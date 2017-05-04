@@ -13,6 +13,20 @@ Drop Cap Games is a collective developer team name for CMSC 22 project.
 	* `make build` to compile and run at the same time
 * Always check the ***Projects*** tab to know what tasks are left to do, in progress, and done.
 
+### Package Directory
+```
+pvs
+|---- University.class
+|
+|---- essentials/
+|-------- GameElement.class
+|-------- Professor.class
+|-------- Student.class
+|
+|---- objects/
+|-------- Money.class
+```
+
 ### Coding Rules and Guidelines
 > These coding rules should be HIGHLY implemented for ease of collaboration and code readability.
 1. **NEVER** use soft tabs (spaces as tabs) in your codes. Use *hard tabs*.
