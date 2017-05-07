@@ -1,4 +1,5 @@
 package pvs.essentials;
+import pvs.University;
 
 public final class Tita extends Professor {
 	private final static int HIT_POINTS = 75;
@@ -9,13 +10,14 @@ public final class Tita extends Professor {
 	private final static int COOLDOWN = 20;
 	private final static String GRAPHICS = ".png";
 
-	public Tita() {
+	public Tita(University university) {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN);
+			  COOLDOWN,
+			  university);
 	}
 }

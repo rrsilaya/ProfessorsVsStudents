@@ -1,4 +1,5 @@
 package pvs.essentials;
+import pvs.University;
 
 public final class CoffeeMaker extends Professor {
 	private final static int HIT_POINTS = 130;
@@ -9,13 +10,14 @@ public final class CoffeeMaker extends Professor {
 	private final static int COOLDOWN = 35;
 	private final static String GRAPHICS = ".png";
 
-	public CoffeeMaker() {
+	public CoffeeMaker(University university) {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN);
+			  COOLDOWN,
+			  university);
 	}
 }

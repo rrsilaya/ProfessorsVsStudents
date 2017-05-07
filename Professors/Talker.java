@@ -1,4 +1,5 @@
 package pvs.essentials;
+import pvs.University;
 
 public final class Talker extends Professor {
 	private final static int HIT_POINTS = 120;
@@ -9,13 +10,14 @@ public final class Talker extends Professor {
 	private final static int COOLDOWN = 20;
 	private final static String GRAPHICS = ".png";
 
-	public Talker() {
+	public Talker(University university) {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN);
+			  COOLDOWN,
+			  university);
 	}
 }
