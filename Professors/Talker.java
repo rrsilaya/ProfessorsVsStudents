@@ -3,7 +3,7 @@ import pvs.University;
 
 public final class Talker extends Professor {
 	private final static int HIT_POINTS = 120;
-	private final static int DMG_POINTS = 20;
+	private final static int DMG_POINTS = 10;
 	private final static int ATK_SPEED = 30;
 	private final static String TYPE = "Talker";
 	private final static int SALARY = 100;
