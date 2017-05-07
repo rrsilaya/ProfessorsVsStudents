@@ -23,16 +23,16 @@ public class Demo {
 	}
 
 	public static void main(String[] args) {
-		University uplb = new University(1);
+		// University uplb = new University(1);
 
-		Professor a = new Professor(100, 10, 5, "Ralph", 500, 10);
-		Professor b = new Professor(100, 10, 5, "lawrence", 500, 10);
-		uplb.hireProfessor(0, 0, a);
-		uplb.hireProfessor(0, 1, b);
-		uplb.log();
+		// Professor a = new Professor(100, 10, 5, "Ralph", 500, 10);
+		// Professor b = new Professor(100, 10, 5, "lawrence", 500, 10);
+		// uplb.hireProfessor(0, 0, a);
+		// uplb.hireProfessor(0, 1, b);
+		// uplb.log();
 
-		Timer timer = new Timer(10);
-		Thread timerthread = new Thread(timer);
-		timerthread.start();
+		// Timer timer = new Timer(10);
+		// Thread timerthread = new Thread(timer);
+		// timerthread.start();
 	}
 }
