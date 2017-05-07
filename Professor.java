@@ -38,7 +38,7 @@ public abstract class Professor extends GameElement implements Runnable {
 	public void run() {
 		Student toAttack = this.university.frontStudent(this.arrX, this.arrY);
 
-		while(true) {
+		while(this.hitPoints != 0) {
 			if(toAttack != null) {
 				this.attack(toAttack);
 				this.university.elementRemover();
