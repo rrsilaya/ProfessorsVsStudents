@@ -5,8 +5,9 @@ public abstract class GameElement {
 	protected int dmgPoints;
 	protected int atkSpeed;
 	protected String type;
+	protected String graphics;
 
-	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type) {
+	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics) {
 		this.hitPoints = hitPoints;
 		this.dmgPoints = dmgPoints;
 		this.atkSpeed = atkSpeed;

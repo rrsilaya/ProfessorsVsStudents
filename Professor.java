@@ -1,6 +1,6 @@
 package pvs.essentials;
 
-public class Professor extends GameElement {
+public abstract class Professor extends GameElement {
 	protected int salary;
 	protected int state;
 	protected final int COOLDOWN;
@@ -11,9 +11,9 @@ public class Professor extends GameElement {
 	protected final static String WATER = "Water Thrower";
 	protected final static String COFFEE = "Coffee Maker";
 
-	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type,
+	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics,
 		int salary, int cooldown) {
-		super(hitPoints, dmgPoints, atkSpeed, type);
+		super(hitPoints, dmgPoints, atkSpeed, type, graphics);
 
 		this.salary = salary;
 		this.COOLDOWN = cooldown;

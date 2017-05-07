@@ -1,15 +1,8 @@
 package pvs.essentials;
 
 public abstract class Student {
-	boolean isSlow;
-
-	public Student() {
-		super();
+	public Student(int hitPoints, int atkSpeed, String type, String graphics) {
+		super(hitPoints, atkSpeed, type, graphics);
 		this.isSlow = false;
-	}
-
-	// Getters
-	public boolean isSlow() {
-		return this.isSlow;
 	}
 }
