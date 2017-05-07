@@ -7,8 +7,9 @@ import pvs.essentials.GameElement;
 import pvs.essentials.Professor;
 import pvs.essentials.Student;
 import pvs.objects.Timer;
+import pvs.objects.Colorable;
 
-public class University {
+public class University implements Colorable {
 	private ArrayList<Professor> profRoster; // List of available prof (?)
 	private Professor[][] professors; // Professors in the grid
 	private Student[][] students;
@@ -64,14 +65,29 @@ public class University {
 	public synchronized void positionStudent(int x, int y, Student student) {
 		this.students[y][x] = student;
 		student.positionElement(x, y);
+
+		// Add Threads
+		this.studentsThread.add(new Thread(student));
+		this.studentsThread.get(this.studentsThread.size() - 1).start();
 	}
 
-	public Student frontStudent(int x, int y) {
+	public synchronized void repositionStudent(int pastX, int presentX, Student student) {
+		this.students[student.getArrY()][pastX] = null;
+		this.students[student.getArrY()][presentX] = student;
+	}
+
+	public synchronized Student frontStudent(int x, int y) {
 		for(int i = 0; i < 5; i++) {
 			if(students[y][x + i] != null) {
 				return students[y][x + i];
 			}
 		}
+
+		return null;
+	}
+
+	public synchronized Professor frontProfessor(int x, int y) {
+		if(this.professors[y][x] != null) return this.professors[y][x];
 
 		return null;
 	}
@@ -120,7 +136,10 @@ public class University {
 		else return University.NONE_ID;
 	}
 
-	public void log() {
+	public synchronized void log() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+
 		// Grid
 		for(int row = 0; row < 5; row++) {
 			// Top
@@ -151,16 +170,16 @@ public class University {
 						prof = this.professors[row][col];
 						map = new int[]{col, row};
 
-						System.out.printf("|    PRF %14s [%2d,%d]   HP: %3d  /  DP: %3d       |\n",
-				prof.getType(), map[0], map[1], prof.getHP(), prof.getDP());
+						System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+							Colorable.RED, prof.getType(), map[0], map[1], Colorable.RESET, prof.getHP(), prof.getDP());
 					}
 
 					if(this.students[row][col] != null) {
 						stud = this.students[row][col];
 						map = new int[]{col, row};
 
-						System.out.printf("|    STD %14s [%2d,%d]   HP: %3d  /  DP: %3d       |\n",
-				stud.getType(), map[0], map[1], stud.getHP(), stud.getDP());
+						System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+							Colorable.CYAN, stud.getType(), map[0], map[1], Colorable.RESET, stud.getHP(), stud.getDP());
 					}
 				}
 			}
