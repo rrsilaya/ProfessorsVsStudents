@@ -3,16 +3,18 @@ package pvs;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pvs.essentials.GameElement;
 import pvs.essentials.Professor;
 import pvs.essentials.Student;
+import pvs.objects.Timer;
 
 public class University {
 	private ArrayList<Professor> profRoster; // List of available prof (?)
 	private Professor[][] professors; // Professors in the grid
-	private ArrayList<int[]> professorInfo; // Link list for prof info
-
 	private Student[][] students;
-	private ArrayList<int[]> studentInfo;
+
+	private ArrayList<Thread> professorsThread;
+	private ArrayList<Thread> studentsThread;
 
 	private int level;
 	private int studentCount;
@@ -21,19 +23,21 @@ public class University {
 	private boolean isHellWeek;
 
 	private final static int GAME_LENGTH = 120;
+	private final static int SCOPE = 6;
 
 	// Game Element Identifiers
 	private final static char PROF_ID = 'P';
 	private final static char STUD_ID = 'S';
 	private final static char BOTH_ID = 'B';
+	private final static char NONE_ID = ' ';
 
 	public University(int level) {
 		this.profRoster = new ArrayList<Professor>();
 		this.professors = new Professor[5][10];
 		this.students = new Student[5][10];
 
-		this.professorInfo = new ArrayList<int[]>();
-		this.studentInfo = new ArrayList<int[]>();
+		this.professorsThread = new ArrayList<Thread>();
+		this.studentsThread = new ArrayList<Thread>();
 
 		Random rand = new Random();
 
@@ -46,10 +50,40 @@ public class University {
 		return professors[y][x] == null ? false : true;
 	}
 
-	public void hireProfessor(int x, int y, Professor professor) {
+	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			this.professors[y][x] = professor;
-			this.professorInfo.add(new int[]{x, y}); // Saves the coordinates of the prof
+			professor.positionElement(x, y);
+
+			// Add Threads
+			this.professorsThread.add(new Thread(professor));
+			this.professorsThread.get(this.professorsThread.size() - 1).start();
+		}
+	}
+
+	public synchronized void positionStudent(int x, int y, Student student) {
+		this.students[y][x] = student;
+		student.positionElement(x, y);
+	}
+
+	public Student frontStudent(int x, int y) {
+		for(int i = 0; i < 5; i++) {
+			if(students[y][x + i] != null) {
+				return students[y][x + i];
+			}
+		}
+
+		return null;
+	}
+
+	public synchronized void elementRemover() {
+		for(int row = 0; row < 5; row++) {
+			for(int col = 0; col < 10; col++) {
+				if(this.students[row][col] != null &&
+					this.students[row][col].getHP() == 0) this.students[row][col] = null;
+				if(this.professors[row][col] != null &&
+					this.professors[row][col].getHP() == 0) this.professors[row][col] = null;
+			}
 		}
 	}
 
@@ -83,7 +117,7 @@ public class University {
 			return University.PROF_ID;
 		else if(this.students[y][x] != null)
 			return University.STUD_ID;
-		else return ' ';
+		else return University.NONE_ID;
 	}
 
 	public void log() {
@@ -106,12 +140,30 @@ public class University {
 
 		// Logs
 		System.out.println(".---------------------------------------------------------.");
-		for(int i = 0; i < this.professorInfo.size(); i++) {
-			int[] map = this.professorInfo.get(i);
-			Professor prof = this.professors[map[1]][map[0]];
+		Professor prof;
+		Student stud;
+		int[] map;
 
-			System.out.printf("|  Prof [%2d,%d]   HP: %3d  /  DP: %3d  /  TYPE: %9s  |\n",
-				map[0], map[1], prof.getHP(), prof.getDP(), prof.getType().length() > 6 ? prof.getType().substring(0,6) : prof.getType());
+		for(int row = 0; row < 5; row++) {
+			for(int col = 0; col < 10; col++) {
+				if(this.professors[row][col] != null || this.students[row][col] != null) {
+					if(this.professors[row][col] != null) {
+						prof = this.professors[row][col];
+						map = new int[]{col, row};
+
+						System.out.printf("|    PRF %14s [%2d,%d]   HP: %3d  /  DP: %3d       |\n",
+				prof.getType(), map[0], map[1], prof.getHP(), prof.getDP());
+					}
+
+					if(this.students[row][col] != null) {
+						stud = this.students[row][col];
+						map = new int[]{col, row};
+
+						System.out.printf("|    STD %14s [%2d,%d]   HP: %3d  /  DP: %3d       |\n",
+				stud.getType(), map[0], map[1], stud.getHP(), stud.getDP());
+					}
+				}
+			}
 		}
 		System.out.println("'---------------------------------------------------------'\n");
 	}
