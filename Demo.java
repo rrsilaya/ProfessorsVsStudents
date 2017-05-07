@@ -1,7 +1,9 @@
 /* Import Professors vs. Students Library */
 import pvs.University;
-import pvs.essentials.Professor;
 import pvs.objects.Timer;
+
+/* Import Professors */
+import pvs.essentials.*;
 
 /* Import Java Native Classes */
 import java.util.Scanner;
@@ -34,5 +36,17 @@ public class Demo {
 		// Timer timer = new Timer(10);
 		// Thread timerthread = new Thread(timer);
 		// timerthread.start();
+		University uplb = new University(1);
+		Talker talker = new Talker(uplb);
+		WaterThrower waterThrower = new WaterThrower(uplb);
+		Graduating graduating = new Graduating(uplb);
+		Freshie freshie = new Freshie(uplb);
+
+		uplb.hireProfessor(0, 0, talker);
+		uplb.hireProfessor(0, 1, waterThrower);
+		uplb.positionStudent(1, 1, graduating);
+		uplb.positionStudent(1, 0, freshie);
+
+		uplb.log();
 	}
 }
