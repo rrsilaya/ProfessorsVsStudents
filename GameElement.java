@@ -10,13 +10,12 @@ public abstract class GameElement {
 	protected University university;
 	protected int arrX, arrY; // positions in the array of elements
 
-	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics, University university) {
+	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics) {
 		this.hitPoints = hitPoints;
 		this.dmgPoints = dmgPoints;
 		this.atkSpeed = atkSpeed;
 		this.type = type;
 		this.graphics = graphics;
-		this.university = university;
 	}
 
 	public void attack(GameElement element) {
@@ -35,6 +34,10 @@ public abstract class GameElement {
 	public void positionElement(int arrX, int arrY) {
 		this.arrX = arrX;
 		this.arrY = arrY; 
+	}
+
+	public void bindUniversity(University university) {
+		this.university = university;
 	}
 
 	// Getters

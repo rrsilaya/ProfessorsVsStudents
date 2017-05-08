@@ -11,11 +11,13 @@ import pvs.objects.Colorable;
 
 public class University implements Colorable {
 	private ArrayList<Professor> profRoster; // List of available prof (?)
-	private Professor[][] professors; // Professors in the grid
-	private Student[][] students;
 
+	private ArrayList<Professor> professors;
 	private ArrayList<Thread> professorsThread;
+	private ArrayList<Student> students;
 	private ArrayList<Thread> studentsThread;
+
+	private char[][] map; // "visual" representation
 
 	private int level;
 	private int studentCount;
@@ -24,7 +26,11 @@ public class University implements Colorable {
 	private boolean isHellWeek;
 
 	private final static int GAME_LENGTH = 120;
-	private final static int SCOPE = 6;
+	private final static int SCOPE = 5;
+
+	// Game Area
+	private final static int MAX_ROW = 5;
+	private final static int MAX_COL = 10;
 
 	// Game Element Identifiers
 	private final static char PROF_ID = 'P';
@@ -34,8 +40,10 @@ public class University implements Colorable {
 
 	public University(int level) {
 		this.profRoster = new ArrayList<Professor>();
-		this.professors = new Professor[5][10];
-		this.students = new Student[5][10];
+
+		this.professors = new ArrayList<Professor>();
+		this.students = new ArrayList<Student>();
+		this.map = new char[University.MAX_ROW][University.MAX_COL];
 
 		this.professorsThread = new ArrayList<Thread>();
 		this.studentsThread = new ArrayList<Thread>();
@@ -48,13 +56,23 @@ public class University implements Colorable {
 	}
 
 	private boolean isOccupied(int x, int y) {
-		return professors[y][x] == null ? false : true;
+		Professor professor;
+
+		for(int i = 0; i < this.professors.size(); i++) {
+			professor = this.professors.get(i);
+
+			if(professor.getArrX() == x && professor.getArrY() == y) return true;
+		}
+
+		return false;
 	}
 
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
-			this.professors[y][x] = professor;
 			professor.positionElement(x, y);
+			professor.bindUniversity(this);
+
+			this.professors.add(professor);
 
 			// Add Threads
 			this.professorsThread.add(new Thread(professor));
@@ -63,23 +81,26 @@ public class University implements Colorable {
 	}
 
 	public synchronized void positionStudent(int x, int y, Student student) {
-		this.students[y][x] = student;
 		student.positionElement(x, y);
+		student.bindUniversity(this);
+
+		this.students.add(student);
 
 		// Add Threads
 		this.studentsThread.add(new Thread(student));
 		this.studentsThread.get(this.studentsThread.size() - 1).start();
 	}
 
-	public synchronized void repositionStudent(int pastX, int presentX, Student student) {
-		this.students[student.getArrY()][pastX] = null;
-		this.students[student.getArrY()][presentX] = student;
-	}
-
 	public synchronized Student frontStudent(int x, int y) {
-		for(int i = 0; i < 5; i++) {
-			if(students[y][x + i] != null) {
-				return students[y][x + i];
+		Student student;
+
+		for(int i = 0; i < this.students.size(); i++) {
+			student = this.students.get(i);
+
+			if(student.getArrY() == y) {
+				for(int proximity = 0; proximity < University.SCOPE; proximity++) {
+					if(student.getArrX() == x + proximity) return student;
+				}
 			}
 		}
 
@@ -87,20 +108,25 @@ public class University implements Colorable {
 	}
 
 	public synchronized Professor frontProfessor(int x, int y) {
-		if(this.professors[y][x] != null) return this.professors[y][x];
+		Professor professor;		
+
+		for(int i = 0; i < this.professors.size(); i++) {
+			professor = this.professors.get(i);
+
+			if(professor.getArrX() == x && professor.getArrY() == y) return professor;
+		}
 
 		return null;
 	}
 
 	public synchronized void elementRemover() {
-		for(int row = 0; row < 5; row++) {
-			for(int col = 0; col < 10; col++) {
-				if(this.students[row][col] != null &&
-					this.students[row][col].getHP() == 0) this.students[row][col] = null;
-				if(this.professors[row][col] != null &&
-					this.professors[row][col].getHP() == 0) this.professors[row][col] = null;
-			}
-		}
+		// Professors
+		for(int i = 0; i < this.professors.size(); i++)
+			if(this.professors.get(i).getHP() == 0) this.professors.remove(i);
+		
+		// Students
+		for(int i = 0; i < this.students.size(); i++)
+			if(this.students.get(i).getHP() == 0) this.students.remove(i);
 	}
 
 	// Setters
@@ -126,19 +152,34 @@ public class University implements Colorable {
 	}
 
 	// Helpers
-	private char elementIdentifier(int x, int y) {
-		if(this.professors[y][x] != null && this.students[y][x] != null)
-			return University.BOTH_ID;
-		else if(this.professors[y][x] != null)
-			return University.PROF_ID;
-		else if(this.students[y][x] != null)
-			return University.STUD_ID;
-		else return University.NONE_ID;
+	private void visualize() {
+		// Reset
+		for(int row = 0; row < University.MAX_ROW; row++)
+			for(int col = 0; col < University.MAX_COL; col++)
+				this.map[row][col] = University.NONE_ID;
+
+		// Add Professors
+		for(int i = 0; i < this.professors.size(); i++) {
+			Professor professor = this.professors.get(i);
+
+			this.map[professor.getArrY()][professor.getArrX()] = University.PROF_ID;
+		}
+
+		// Add Students
+		for(int i = 0; i < this.students.size(); i++) {
+			Student student = this.students.get(i);
+
+			if(this.map[student.getArrY()][student.getArrX()] == University.PROF_ID)
+				this.map[student.getArrY()][student.getArrX()] = University.BOTH_ID;
+			else this.map[student.getArrY()][student.getArrX()] = University.STUD_ID;
+		}
 	}
 
 	public synchronized void log() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
+
+		this.visualize();
 
 		// Grid
 		for(int row = 0; row < 5; row++) {
@@ -149,7 +190,7 @@ public class University implements Colorable {
 
 			// Mid
 			for(int col = 0; col < 10; col++) {
-				System.out.printf("| %c | ", this.elementIdentifier(col, row));
+				System.out.printf("| %c | ", this.map[row][col]);
 			} System.out.println();
 
 			for(int col = 0; col < 10; col++) {
@@ -157,32 +198,51 @@ public class University implements Colorable {
 			} System.out.println();
 		}
 
+		// // Logs
+		// System.out.println(".---------------------------------------------------------.");
+		// Professor prof;
+		// Student stud;
+		// int[] coords;
+
+		// for(int row = 0; row < 5; row++) {
+		// 	for(int col = 0; col < 10; col++) {
+		// 		if(this.professors[row][col] != null || this.students[row][col] != null) {
+		// 			if(this.professors[row][col] != null) {
+		// 				prof = this.professors[row][col];
+		// 				coords = new int[]{col, row};
+
+		// 				System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+		// 					Colorable.RED, prof.getType(), coords[0], coords[1], Colorable.RESET, prof.getHP(), prof.getDP());
+		// 			}
+
+		// 			if(this.students[row][col] != null) {
+		// 				stud = this.students[row][col];
+		// 				coords = new int[]{col, row};
+
+		// 				System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+		// 					Colorable.CYAN, stud.getType(), coords[0], coords[1], Colorable.RESET, stud.getHP(), stud.getDP());
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// System.out.println("'---------------------------------------------------------'\n");
+
 		// Logs
 		System.out.println(".---------------------------------------------------------.");
-		Professor prof;
-		Student stud;
-		int[] map;
+		GameElement element;
 
-		for(int row = 0; row < 5; row++) {
-			for(int col = 0; col < 10; col++) {
-				if(this.professors[row][col] != null || this.students[row][col] != null) {
-					if(this.professors[row][col] != null) {
-						prof = this.professors[row][col];
-						map = new int[]{col, row};
+		for(int i = 0; i < this.professors.size(); i++) {
+			element = this.professors.get(i);
 
-						System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
-							Colorable.RED, prof.getType(), map[0], map[1], Colorable.RESET, prof.getHP(), prof.getDP());
-					}
+			System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+				Colorable.YELLOW, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
+		}
 
-					if(this.students[row][col] != null) {
-						stud = this.students[row][col];
-						map = new int[]{col, row};
+		for(int i = 0; i < this.students.size(); i++) {
+			element = this.students.get(i);
 
-						System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
-							Colorable.CYAN, stud.getType(), map[0], map[1], Colorable.RESET, stud.getHP(), stud.getDP());
-					}
-				}
-			}
+			System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+				Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
 		}
 		System.out.println("'---------------------------------------------------------'\n");
 	}

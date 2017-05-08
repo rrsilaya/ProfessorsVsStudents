@@ -26,10 +26,10 @@ public class Demo {
 
 	public static void main(String[] args) {
 		University uplb = new University(1);
-		Talker talker = new Talker(uplb);
-		WaterThrower waterThrower = new WaterThrower(uplb);
-		Graduating graduating = new Graduating(uplb);
-		Freshie freshie = new Freshie(uplb);
+		Talker talker = new Talker();
+		WaterThrower waterThrower = new WaterThrower();
+		Graduating graduating = new Graduating();
+		Freshie freshie = new Freshie();
 
 		uplb.hireProfessor(0, 0, talker);
 		uplb.hireProfessor(0, 1, waterThrower);
