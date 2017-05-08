@@ -198,35 +198,6 @@ public class University implements Colorable {
 			} System.out.println();
 		}
 
-		// // Logs
-		// System.out.println(".---------------------------------------------------------.");
-		// Professor prof;
-		// Student stud;
-		// int[] coords;
-
-		// for(int row = 0; row < 5; row++) {
-		// 	for(int col = 0; col < 10; col++) {
-		// 		if(this.professors[row][col] != null || this.students[row][col] != null) {
-		// 			if(this.professors[row][col] != null) {
-		// 				prof = this.professors[row][col];
-		// 				coords = new int[]{col, row};
-
-		// 				System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
-		// 					Colorable.RED, prof.getType(), coords[0], coords[1], Colorable.RESET, prof.getHP(), prof.getDP());
-		// 			}
-
-		// 			if(this.students[row][col] != null) {
-		// 				stud = this.students[row][col];
-		// 				coords = new int[]{col, row};
-
-		// 				System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
-		// 					Colorable.CYAN, stud.getType(), coords[0], coords[1], Colorable.RESET, stud.getHP(), stud.getDP());
-		// 			}
-		// 		}
-		// 	}
-		// }
-		// System.out.println("'---------------------------------------------------------'\n");
-
 		// Logs
 		System.out.println(".---------------------------------------------------------.");
 		GameElement element;
