@@ -1,3 +1,4 @@
+// Reference: Ma'am Miyah Queliste
 // To do: Rectangle Panel and intersection method
 
 import javax.swing.JPanel;
