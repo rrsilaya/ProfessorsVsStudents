@@ -9,13 +9,12 @@ public final class Freshie extends Student {
 	private final static String GRAPHICS = ".png";
 	private final static int MOVEMENT_SPEED = 20;
 
-	public Freshie(University university) {
+	public Freshie() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
-			  MOVEMENT_SPEED,
-			  university);
+			  MOVEMENT_SPEED);
 	}
 }

@@ -10,14 +10,13 @@ public final class Tita extends Professor {
 	private final static int COOLDOWN = 20;
 	private final static String GRAPHICS = ".png";
 
-	public Tita(University university) {
+	public Tita() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN,
-			  university);
+			  COOLDOWN);
 	}
 }

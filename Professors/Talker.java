@@ -10,14 +10,13 @@ public final class Talker extends Professor {
 	private final static int COOLDOWN = 20;
 	private final static String GRAPHICS = ".png";
 
-	public Talker(University university) {
+	public Talker() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN,
-			  university);
+			  COOLDOWN);
 	}
 }

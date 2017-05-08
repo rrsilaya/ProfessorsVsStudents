@@ -10,14 +10,13 @@ public final class WaterThrower extends Professor {
 	private final static int COOLDOWN = 20;
 	private final static String GRAPHICS = ".png";
 
-	public WaterThrower(University university) {
+	public WaterThrower() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN,
-			  university);
+			  COOLDOWN);
 	}
 }

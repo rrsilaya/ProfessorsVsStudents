@@ -8,8 +8,8 @@ public abstract class Professor extends GameElement implements Runnable {
 	protected boolean isAttacking;
 
 	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics,
-		int salary, int cooldown, University university) {
-		super(hitPoints, dmgPoints, atkSpeed, type, graphics, university);
+		int salary, int cooldown) {
+		super(hitPoints, dmgPoints, atkSpeed, type, graphics);
 
 		this.salary = salary;
 		this.cooldown = cooldown;

@@ -5,8 +5,8 @@ public abstract class Student extends GameElement implements Runnable {
 	protected int movementSpeed;
 	protected int pos = 300; // to be moved to sprite class
 
-	public Student(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics, int movementSpeed, University university) {
-		super(hitPoints, dmgPoints, atkSpeed, type, graphics, university);
+	public Student(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics, int movementSpeed) {
+		super(hitPoints, dmgPoints, atkSpeed, type, graphics);
 		this.movementSpeed = movementSpeed;
 	}
 
@@ -19,7 +19,8 @@ public abstract class Student extends GameElement implements Runnable {
 			this.pos -= this.movementSpeed; // movement
 
 			if(this.pos / 30 < this.arrX) { // movement in array
-				this.university.repositionStudent(this.arrX, --this.arrX, this);
+				// this.university.repositionStudent(this.arrX, --this.arrX, this);
+				this.arrX--;
 				this.university.log();
 			}
 

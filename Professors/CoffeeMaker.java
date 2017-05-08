@@ -10,14 +10,13 @@ public final class CoffeeMaker extends Professor {
 	private final static int COOLDOWN = 35;
 	private final static String GRAPHICS = ".png";
 
-	public CoffeeMaker(University university) {
+	public CoffeeMaker() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
 			  SALARY,
-			  COOLDOWN,
-			  university);
+			  COOLDOWN);
 	}
 }

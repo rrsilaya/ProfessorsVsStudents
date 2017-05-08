@@ -9,13 +9,12 @@ public final class Walwaler extends Student {
 	private final static String GRAPHICS = ".png";
 	private final static int MOVEMENT_SPEED = 25;
 
-	public Walwaler(University university) {
+	public Walwaler() {
 		super(HIT_POINTS,
 			  DMG_POINTS,
 			  ATK_SPEED,
 			  TYPE,
 			  GRAPHICS,
-			  MOVEMENT_SPEED,
-			  university);
+			  MOVEMENT_SPEED);
 	}
 }
