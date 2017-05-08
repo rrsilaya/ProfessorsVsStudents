@@ -23,13 +23,15 @@ public class University implements Colorable {
 
 	private StudentGenerator randomizer;
 	private Thread randomizerThread;
+	private Timer timer;
+	private Thread timerThread;
 
 	private int level;
 	private int maxStudentCount;
 	private int fund;
 	private boolean isHellWeek;
 
-	private final static int GAME_LENGTH = 120;
+	private final static int GAME_LENGTH = 180;
 	private final static int SCOPE = 6;
 
 	// Game Area
@@ -50,10 +52,12 @@ public class University implements Colorable {
 		this.map = new char[University.MAX_ROW][University.MAX_COL];
 
 		this.randomizer = new StudentGenerator(University.GAME_LENGTH, 20, this);
+		this.timer = new Timer(University.GAME_LENGTH, this);
 
 		this.professorsThread = new ArrayList<Thread>();
 		this.studentsThread = new ArrayList<Thread>();
 		this.randomizerThread = new Thread(this.randomizer);
+		this.timerThread = new Thread(timer);
 
 		Random rand = new Random();
 
@@ -61,7 +65,9 @@ public class University implements Colorable {
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
 		this.isHellWeek = false;
 
+		// Start Required Threads
 		this.randomizerThread.start();
+		this.timerThread.start();
 	}
 
 	private boolean isOccupied(int x, int y) {
@@ -156,8 +162,20 @@ public class University implements Colorable {
 		return this.fund;
 	}
 
+	public int getTime() {
+		return this.timer.getTime();
+	}
+
+	public boolean isTimerActive() {
+		return this.timer.isActive();
+	}
+
 	public boolean isHellWeek() {
 		return this.isHellWeek;
+	}
+
+	public synchronized boolean hasStudentsLeft() {
+		return this.students.size() == 0 ? false : true;
 	}
 
 	// Helpers
@@ -211,17 +229,18 @@ public class University implements Colorable {
 		System.out.println(".---------------------------------------------------------.");
 		GameElement element;
 
+		System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
 		for(int i = 0; i < this.professors.size(); i++) {
 			element = this.professors.get(i);
 
-			System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+			System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
 				Colorable.YELLOW, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
 		}
 
 		for(int i = 0; i < this.students.size(); i++) {
 			element = this.students.get(i);
 
-			System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d       |\n",
+			System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
 				Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
 		}
 		System.out.println("'---------------------------------------------------------'\n");

@@ -44,6 +44,8 @@ public abstract class Professor extends GameElement implements Runnable {
 				this.university.elementRemover();
 				this.university.log();
 
+				if(!this.university.hasStudentsLeft()) break; // finishes the game
+
 				try {
 					Thread.sleep(100 * this.atkSpeed);
 				} catch(Exception e) {}

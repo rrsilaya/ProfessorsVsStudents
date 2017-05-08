@@ -37,22 +37,23 @@ public class StudentGenerator implements Runnable {
 	public void run() {
 		Random rand = new Random();
 
-		while(true) {
-			// Allow player to hire professors
+		// Allow player to hire professors
+		try {
+			Thread.sleep(StudentGenerator.REST_TIME);
+		} catch(Exception e) {}
+
+
+		while(this.university.isTimerActive()) {
+			this.university.positionStudent(rand.nextInt(5), this.randStudent());
+			this.university.log();
+
+			// Pause
 			try {
-				Thread.sleep(StudentGenerator.REST_TIME);
+				if(this.university.getTime() > this.gameLength - 15)
+					Thread.sleep((rand.nextInt(3) + 1) * 2000);
+				else
+					Thread.sleep(rand.nextInt(this.gameLength / this.maxStudents) * 1500);
 			} catch(Exception e) {}
-
-			// Randomize Students (not hellWeek)
-			while(true/*time == (gameLength / 4) * 3*/) {
-				this.university.positionStudent(rand.nextInt(5), this.randStudent());
-				this.university.log();
-
-				// Pause
-				try {
-					Thread.sleep(((this.gameLength / 4) * 3) / ((this.maxStudents / 4) * 3) * (rand.nextInt(4) * 2000));
-				} catch(Exception e) {}
-			}
 		}
 	}
 }
