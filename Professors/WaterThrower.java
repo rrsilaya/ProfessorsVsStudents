@@ -3,7 +3,7 @@ import pvs.University;
 
 public final class WaterThrower extends Professor {
 	private final static int HIT_POINTS = 75;
-	private final static int DMG_POINTS = 15;
+	private final static int DMG_POINTS = 20;
 	private final static int ATK_SPEED = 25;
 	private final static String TYPE = "Water Thrower";
 	private final static int SALARY = 150;

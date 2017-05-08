@@ -3,7 +3,7 @@ import pvs.University;
 
 public final class CoffeeMaker extends Professor {
 	private final static int HIT_POINTS = 130;
-	private final static int DMG_POINTS = 25;
+	private final static int DMG_POINTS = 35;
 	private final static int ATK_SPEED = 25;
 	private final static String TYPE = "Coffee Maker";
 	private final static int SALARY = 200;
