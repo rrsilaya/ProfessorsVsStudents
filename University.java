@@ -6,8 +6,10 @@ import java.util.Random;
 import pvs.essentials.GameElement;
 import pvs.essentials.Professor;
 import pvs.essentials.Student;
+
 import pvs.objects.Timer;
 import pvs.objects.Colorable;
+import pvs.objects.StudentGenerator;
 
 public class University implements Colorable {
 	private ArrayList<Professor> profRoster; // List of available prof (?)
@@ -19,14 +21,16 @@ public class University implements Colorable {
 
 	private char[][] map; // "visual" representation
 
+	private StudentGenerator randomizer;
+	private Thread randomizerThread;
+
 	private int level;
-	private int studentCount;
 	private int maxStudentCount;
 	private int fund;
 	private boolean isHellWeek;
 
 	private final static int GAME_LENGTH = 120;
-	private final static int SCOPE = 5;
+	private final static int SCOPE = 6;
 
 	// Game Area
 	private final static int MAX_ROW = 5;
@@ -45,14 +49,19 @@ public class University implements Colorable {
 		this.students = new ArrayList<Student>();
 		this.map = new char[University.MAX_ROW][University.MAX_COL];
 
+		this.randomizer = new StudentGenerator(University.GAME_LENGTH, 20, this);
+
 		this.professorsThread = new ArrayList<Thread>();
 		this.studentsThread = new ArrayList<Thread>();
+		this.randomizerThread = new Thread(this.randomizer);
 
 		Random rand = new Random();
 
 		this.level = level;
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
 		this.isHellWeek = false;
+
+		this.randomizerThread.start();
 	}
 
 	private boolean isOccupied(int x, int y) {
@@ -80,8 +89,8 @@ public class University implements Colorable {
 		}
 	}
 
-	public synchronized void positionStudent(int x, int y, Student student) {
-		student.positionElement(x, y);
+	public synchronized void positionStudent(int y, Student student) {
+		student.positionElement(University.MAX_COL - 1, y);
 		student.bindUniversity(this);
 
 		this.students.add(student);
@@ -130,8 +139,12 @@ public class University implements Colorable {
 	}
 
 	// Setters
-	public int addFund(int amount) {
-		return this.fund += amount;
+	public void addFund(int amount) {
+		this.fund += amount;
+	}
+
+	void toggleHellWeek() {
+		this.isHellWeek = !this.isHellWeek;
 	}
 
 	// Getters
@@ -141,10 +154,6 @@ public class University implements Colorable {
 
 	public int getFund() {
 		return this.fund;
-	}
-
-	public int getStudentCount() {
-		return this.studentCount;
 	}
 
 	public boolean isHellWeek() {
@@ -182,18 +191,18 @@ public class University implements Colorable {
 		this.visualize();
 
 		// Grid
-		for(int row = 0; row < 5; row++) {
+		for(int row = 0; row < University.MAX_ROW; row++) {
 			// Top
-			for(int col = 0; col < 10; col++) {
+			for(int col = 0; col < University.MAX_COL; col++) {
 				System.out.print(",---, ");
 			} System.out.println();
 
 			// Mid
-			for(int col = 0; col < 10; col++) {
+			for(int col = 0; col < University.MAX_COL; col++) {
 				System.out.printf("| %c | ", this.map[row][col]);
 			} System.out.println();
 
-			for(int col = 0; col < 10; col++) {
+			for(int col = 0; col < University.MAX_COL; col++) {
 				System.out.print("'---' ");
 			} System.out.println();
 		}
