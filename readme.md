@@ -1,3 +1,5 @@
+<img src="Assets/Drop-Cap-Games-Logo.png" height="80%" align="center" alt="Drop Cap Games Logo"/>
+
 # Drop Cap Games
 Drop Cap Games is a collective developer team name for CMSC 22 project.
 
