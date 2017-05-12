@@ -62,13 +62,22 @@ class Animation extends JFrame{
 
     //Margins
     JPanel marginEast = new JPanel();
-    marginEast.setPreferredSize(new Dimension(50,600));
+    marginEast.setPreferredSize(new Dimension(50,400));
     JPanel marginNorth = new JPanel();
+    marginNorth.setLayout(new FlowLayout(FlowLayout.LEFT));
     marginNorth.setPreferredSize(new Dimension(1000,100));
     JPanel marginWest = new JPanel();
-    marginWest.setPreferredSize(new Dimension(50,600));
+    marginWest.setPreferredSize(new Dimension(50,400));
     JPanel marginSouth = new JPanel();
     marginSouth.setPreferredSize(new Dimension(1000,100));
+
+    //Player Name Panel
+    JLabel playerName = new JLabel("Player Name");
+    JButton player = new JButton();
+    player.setEnabled(false);
+    player.setPreferredSize(new Dimension(100,25));
+    JButton changePlayer = new JButton("Change Player");
+    changePlayer.setPreferredSize(new Dimension(125,25));
 
     //Buttons
     JButton adventure = new JButton("Adventure");
@@ -91,6 +100,10 @@ class Animation extends JFrame{
     buttonPanel.add(adventure);
     buttonPanel.add(instruction);
     buttonPanel.add(exitGame);
+
+    marginNorth.add(playerName);
+    marginNorth.add(player);
+    marginNorth.add(changePlayer);
 
     backgroundImage.add(buttonPanel, BorderLayout.EAST);
 
