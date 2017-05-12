@@ -123,7 +123,7 @@ public class University implements Colorable {
 	}
 
 	public synchronized Professor frontProfessor(int x, int y) {
-		Professor professor;		
+		Professor professor;
 
 		for(int i = 0; i < this.professors.size(); i++) {
 			professor = this.professors.get(i);
@@ -138,7 +138,7 @@ public class University implements Colorable {
 		// Professors
 		for(int i = 0; i < this.professors.size(); i++)
 			if(this.professors.get(i).getHP() == 0) this.professors.remove(i);
-		
+
 		// Students
 		for(int i = 0; i < this.students.size(); i++)
 			if(this.students.get(i).getHP() == 0) this.students.remove(i);
@@ -147,6 +147,10 @@ public class University implements Colorable {
 	// Setters
 	public void addFund(int amount) {
 		this.fund += amount;
+	}
+
+	public void decFund(int amount){
+		this.fund -= amount;
 	}
 
 	void toggleHellWeek() {
