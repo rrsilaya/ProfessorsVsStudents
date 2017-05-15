@@ -1,3 +1,5 @@
+// UNFINISHED NOTE: MAKE MENU A METHOD, MERGE WITH MAIN MENU, MAKE OTHER OBJECTS SERIALIZABLE
+
 /* Import Professors vs. Students Library */
 import pvs.University;
 import pvs.objects.Timer;
@@ -7,6 +9,14 @@ import pvs.essentials.*;
 
 /* Import Java Native Classes */
 import java.util.Scanner;
+
+// Persistence
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Demo {
 	private static int menu() {
@@ -39,5 +49,28 @@ public class Demo {
 		uplb.hireProfessor(0, 4, waterThrower5);
 
 		uplb.log();
+	}
+	
+	public void playGame() {
+
+	}
+
+	public void saveGame() {
+		try{
+			ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream("loadGame.txt"));
+			save.writeObject(this.uplb);
+			save.close();
+		}catch(Exception e) {}
+	}
+
+	public void loadGame() {
+		try{
+			ObjectInputStream load = new ObjectInputStream(new FileInputStream("loadGame.txt"));
+			this.uplb = (University)load.readObject();
+			load.close();
+		}catch(FileNotFoundException e) {
+			System.out.println("ERROR: No previously saved game.");
+			//Show a dialogue box
+		}catch(Exception e) {}
 	}
 }
