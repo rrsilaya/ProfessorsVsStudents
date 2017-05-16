@@ -5,6 +5,9 @@ import pvs.objects.Timer;
 /* Import Professors */
 import pvs.essentials.*;
 
+/* Import Screens */
+import pvs.objects.MainFrame;
+
 /* Import Java Native Classes */
 import java.util.Scanner;
 
@@ -25,19 +28,20 @@ public class Demo {
 	}
 
 	public static void main(String[] args) {
-		University uplb = new University(1);
-		WaterThrower waterThrower1 = new WaterThrower();
-		WaterThrower waterThrower2 = new WaterThrower();
-		WaterThrower waterThrower3 = new WaterThrower();
-		WaterThrower waterThrower4 = new WaterThrower();
-		WaterThrower waterThrower5 = new WaterThrower();
+		// University uplb = new University(1);
+		// WaterThrower waterThrower1 = new WaterThrower();
+		// WaterThrower waterThrower2 = new WaterThrower();
+		// WaterThrower waterThrower3 = new WaterThrower();
+		// WaterThrower waterThrower4 = new WaterThrower();
+		// WaterThrower waterThrower5 = new WaterThrower();
 
-		uplb.hireProfessor(0, 0, waterThrower1);
-		uplb.hireProfessor(0, 1, waterThrower2);
-		uplb.hireProfessor(0, 2, waterThrower3);
-		uplb.hireProfessor(0, 3, waterThrower4);
-		uplb.hireProfessor(0, 4, waterThrower5);
+		// uplb.hireProfessor(0, 0, waterThrower1);
+		// uplb.hireProfessor(0, 1, waterThrower2);
+		// uplb.hireProfessor(0, 2, waterThrower3);
+		// uplb.hireProfessor(0, 3, waterThrower4);
+		// uplb.hireProfessor(0, 4, waterThrower5);
 
-		uplb.log();
+		// uplb.log();
+		MainFrame frame = new MainFrame();
 	}
 }
