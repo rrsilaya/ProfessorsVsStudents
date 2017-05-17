@@ -16,9 +16,12 @@ public class MainFrame extends JFrame {
 
 		Container container = this.getContentPane();
 		
-		// Set Screens for Main Menu
-		Background menu = new Background("Assets/UI/MainMenu.jpg");
-		container.add(menu, BorderLayout.CENTER);
+		// // Set Screens for Main Menu
+		// Background menu = new Background("Assets/UI/MainMenu.jpg");
+		// container.add(menu, BorderLayout.CENTER);
+
+		Background gameplay = new Background("Assets/UI/Gameplay/Background.jpg");
+		container.add(gameplay, BorderLayout.CENTER);
 
 		this.pack();
 		this.setLocationRelativeTo(null);
