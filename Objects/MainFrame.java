@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
 
-import pvs.screens.MainMenu;
+import pvs.screens.Background;
 
 public class MainFrame extends JFrame {
 	public MainFrame() {
@@ -16,8 +16,8 @@ public class MainFrame extends JFrame {
 
 		Container container = this.getContentPane();
 		
-		// Set Screens
-		MainMenu menu = new MainMenu();
+		// Set Screens for Main Menu
+		Background menu = new Background("Assets/UI/MainMenu.jpg");
 		container.add(menu, BorderLayout.CENTER);
 
 		this.pack();
