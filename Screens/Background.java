@@ -10,11 +10,13 @@ import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class MainMenu extends JPanel {
-	private final static String path = "Assets/UI/MainMenu.jpg";
+public class Background extends JPanel {
+	private final String path;
 	private BufferedImage img;
 
-	public MainMenu() {
+	public Background(String path) {
+		this.path = path;
+
 		this.setBackground(Color.BLACK);
 		this.setLayout(null);
 
