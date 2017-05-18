@@ -23,8 +23,6 @@ public class Background extends JPanel {
 		try {
 			this.img = ImageIO.read(new File(this.path));
 		} catch(Exception e) {}
-
-		this.repaint();
 	}
 
 	@Override

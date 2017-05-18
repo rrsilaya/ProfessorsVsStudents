@@ -14,6 +14,6 @@ public class Gameplay extends Background {
 		// Addition of Stash
 		// this.add(new ObjectRendered(20, 0, "Assets/UI/Gameplay/Stash.png"));
 		ObjectRendered stash = new ObjectRendered(20, 0, "Assets/UI/Gameplay/Stash.png");
-		this.add(stash, BorderLayout.CENTER);
+		this.add(stash);
 	}
 }

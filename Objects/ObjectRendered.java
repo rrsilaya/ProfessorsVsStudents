@@ -3,13 +3,14 @@ package pvs.objects;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 
 public class ObjectRendered extends JPanel {
 	private int x, y;
-	protected BufferedImage img;
+	private BufferedImage img;
 
 	public ObjectRendered(int x, int y, String path) {
 		this.x = x;
@@ -22,7 +23,7 @@ public class ObjectRendered extends JPanel {
 			this.img = ImageIO.read(new File(path));
 		} catch(Exception e) {}
 		
-		this.repaint();
+		// this.repaint();
 	}
 
 	@Override
@@ -32,5 +33,6 @@ public class ObjectRendered extends JPanel {
 
 		System.out.println("Printed");
 		g2d.drawImage(this.img, this.x, this.y, null);
+		// Toolkit.getDefaultToolkit.sync();
 	}
 }
