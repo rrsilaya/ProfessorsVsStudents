@@ -60,4 +60,8 @@ public abstract class GameElement {
 	public int getArrY() {
 		return this.arrY;
 	}
+
+	public String getGraphics() {
+		return this.graphics;
+	}
 }
