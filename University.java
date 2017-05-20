@@ -178,6 +178,10 @@ public class University implements Colorable {
 		return this.students.size() == 0 ? false : true;
 	}
 
+	public ArrayList<Professor> getProfessors() {
+		return this.professors;
+	}
+
 	// Helpers
 	private void visualize() {
 		// Reset
