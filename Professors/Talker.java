@@ -8,7 +8,7 @@ public final class Talker extends Professor {
 	private final static String TYPE = "Talker";
 	private final static int SALARY = 100;
 	private final static int COOLDOWN = 20;
-	private final static String GRAPHICS = ".png";
+	private final static String GRAPHICS = "Assets/Professors/Talker.png";
 
 	public Talker() {
 		super(HIT_POINTS,
