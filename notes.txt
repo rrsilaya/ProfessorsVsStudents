@@ -1,0 +1,19 @@
+PvSgame
+university
+-student
+-professor
+-own
+
+
+mainMenu
+-playgame
+-load
+-aboutgame
+-exitgame
+
+Game
+-play game
+-load game
+-save game
+-
+University

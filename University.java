@@ -11,8 +11,15 @@ import pvs.objects.Timer;
 import pvs.objects.Colorable;
 import pvs.objects.StudentGenerator;
 
-public class University implements Colorable {
-	private ArrayList<Professor> profRoster; // List of available prof (?)
+// GUI
+import javax.swing.JPanel;
+import java.awt.Image;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+
+public class University extends JPanel implements Colorable {
+	private ArrayList<Professor> profRoster; // list of available prof
 
 	private ArrayList<Professor> professors;
 	private ArrayList<Thread> professorsThread;
@@ -44,6 +51,10 @@ public class University implements Colorable {
 	private final static char BOTH_ID = 'B';
 	private final static char NONE_ID = ' ';
 
+	// GUI
+	Image image;
+	private final static String BACKGROUND = ".png";
+
 	public University(int level) {
 		this.profRoster = new ArrayList<Professor>();
 
@@ -68,6 +79,9 @@ public class University implements Colorable {
 		// Start Required Threads
 		this.randomizerThread.start();
 		this.timerThread.start();
+
+		this.loadImage(University.BACKGROUND);
+		this.repaint();
 	}
 
 	private boolean isOccupied(int x, int y) {
@@ -244,5 +258,21 @@ public class University implements Colorable {
 				Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
 		}
 		System.out.println("'---------------------------------------------------------'\n");
+	}
+
+	// GUI
+	private void loadImage(String graphics){
+		try{
+			image = Toolkit.getDefaultToolkit().getImage(graphics);
+		} catch(Exception e){}	
+	}
+
+	@Override
+	public void paintComponent(Graphics image){
+		super.paintComponent(image);
+		Graphics2D background = (Graphics2D) image;
+
+		background.drawImage(this.image, 0, 0,null);
+		Toolkit.getDefaultToolkit().sync();
 	}
 }
