@@ -53,5 +53,8 @@ public abstract class Professor extends GameElement implements Runnable {
 
 			toAttack = this.university.frontStudent(this.arrX, this.arrY);
 		}
+
+		this.removeFromScreen();
+		this.repaint();
 	}
 }

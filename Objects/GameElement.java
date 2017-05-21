@@ -1,7 +1,10 @@
 package pvs.essentials;
-import pvs.University;
 
-public abstract class GameElement {
+import pvs.University;
+import pvs.objects.Sprite;
+import java.util.UUID;
+
+public abstract class GameElement extends Sprite {
 	protected int hitPoints;
 	protected int dmgPoints;
 	protected int atkSpeed;
@@ -11,6 +14,7 @@ public abstract class GameElement {
 	protected int arrX, arrY; // positions in the array of elements
 
 	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics) {
+		super(0, 0, graphics);
 		this.hitPoints = hitPoints;
 		this.dmgPoints = dmgPoints;
 		this.atkSpeed = atkSpeed;
@@ -33,7 +37,17 @@ public abstract class GameElement {
 
 	public void positionElement(int arrX, int arrY) {
 		this.arrX = arrX;
-		this.arrY = arrY; 
+		this.arrY = arrY;
+	}
+
+	public void setUIPosition(int x, int y) {
+		this.setX(x);
+		this.setY(y);
+	}
+
+	public void removeFromScreen() {
+		this.setX(-1000);
+		this.setY(-1000);
 	}
 
 	public void bindUniversity(University university) {
@@ -59,9 +73,5 @@ public abstract class GameElement {
 
 	public int getArrY() {
 		return this.arrY;
-	}
-
-	public String getGraphics() {
-		return this.graphics;
 	}
 }

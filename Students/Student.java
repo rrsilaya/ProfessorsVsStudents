@@ -41,5 +41,9 @@ public abstract class Student extends GameElement implements Runnable {
 		}
 
 		// this.hitPoints = 0; // kwatro ka na bui
+		if(this.hitPoints == 0) {
+			this.removeFromScreen();
+			this.repaint();
+		}
 	}
 }

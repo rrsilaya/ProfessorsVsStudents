@@ -31,6 +31,8 @@ public class University implements Colorable {
 	private int fund;
 	private boolean isHellWeek;
 
+	private String removedElement_uuid;
+
 	private final static int GAME_LENGTH = 180;
 	private final static int SCOPE = 6;
 
@@ -85,6 +87,7 @@ public class University implements Colorable {
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
+			professor.setUIPosition(85, y * 100);
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
@@ -137,11 +140,13 @@ public class University implements Colorable {
 	public synchronized void elementRemover() {
 		// Professors
 		for(int i = 0; i < this.professors.size(); i++)
-			if(this.professors.get(i).getHP() == 0) this.professors.remove(i);
+			if(this.professors.get(i).getHP() == 0)
+				this.professors.remove(i);
 		
 		// Students
 		for(int i = 0; i < this.students.size(); i++)
-			if(this.students.get(i).getHP() == 0) this.students.remove(i);
+			if(this.students.get(i).getHP() == 0)
+				this.students.remove(i);
 	}
 
 	// Setters
@@ -180,6 +185,10 @@ public class University implements Colorable {
 
 	public ArrayList<Professor> getProfessors() {
 		return this.professors;
+	}
+
+	public ArrayList<Student> getStudents() {
+		return this.students;
 	}
 
 	// Helpers

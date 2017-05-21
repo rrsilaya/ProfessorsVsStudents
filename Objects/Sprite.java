@@ -14,8 +14,8 @@ public class Sprite extends JPanel {
 	private BufferedImage img;
 
 	public Sprite(int x, int y, String path) {
-		this.x = x;
-		this.y = y;
+		this.x = x - 1;
+		this.y = y - 1;
 
 		try {
 			this.img = ImageIO.read(new File(path));
@@ -23,6 +23,14 @@ public class Sprite extends JPanel {
 
 		this.setOpaque(false);
 		this.setSize(1000, 600);
+	}
+
+	public void setX(int x) {
+		this.x = x - 1;
+	}
+
+	public void setY(int y) {
+		this.y = y - 1;
 	}
 
 	@Override
