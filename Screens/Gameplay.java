@@ -31,7 +31,6 @@ public class Gameplay extends Background {
 	private BufferedImage background;
 	private University university;
 	private ArrayList<JPanel> lines;
-	private ArrayList<String> renderedStudents;
 
 	public Gameplay() {
 		super("Assets/UI/Gameplay/Background.jpg");
@@ -60,9 +59,6 @@ public class Gameplay extends Background {
 			this.add(this.lines.get(i), i);
 		}
 
-		// UUID Holder
-		this.renderedStudents = new ArrayList<String>();
-
 		// Instantiate Menu Button
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
 		this.renderObject(menu_btn);
@@ -72,7 +68,6 @@ public class Gameplay extends Background {
 			}
 		});
 
-		// this.renderObject(this.university.getTimer());
 		this.add(this.university.getTimer());
 
 		this.repaint();

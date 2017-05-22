@@ -18,7 +18,6 @@ public abstract class Student extends GameElement implements Runnable {
 			this.x -= this.movementSpeed / 15; // movement
 
 			if(this.x / 115 < this.arrX) { // movement in array
-				// this.university.repositionStudent(this.arrX, --this.arrX, this);
 				this.arrX--;
 				this.university.log();
 			}
@@ -32,6 +31,8 @@ public abstract class Student extends GameElement implements Runnable {
 				try {
 					Thread.sleep(150 * this.atkSpeed);
 				} catch(Exception e) {}
+
+				if(toAttack.getHP() == 0) toAttack = null;
 			}
 
 			try {

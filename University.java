@@ -86,7 +86,7 @@ public class University implements Colorable {
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
-			professor.setUIPosition(85, y * 100); // variable
+			professor.setUIPosition(85 + (x * 115), y * 100); // variable
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
