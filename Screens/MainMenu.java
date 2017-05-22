@@ -44,16 +44,16 @@ public class MainMenu extends Background{
     Button playGame = new Button(750, 50, "Assets/UI/Buttons/play.png");
     this.renderObject(playGame);
     playGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Gameplay game = new Gameplay(container, frame);
+      public void actionPerformed(ActionEvent e) {
+        Gameplay game = new Gameplay(container, frame);
         container.removeAll();
         container.add(game, BorderLayout.CENTER);
 
         frame.pack();
-    		frame.setLocationRelativeTo(null);
-    		frame.setVisible(true);
-			}
-		});
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+      }
+    });
 
     Button credits = new Button(750, 150, "Assets/UI/Buttons/credits.png");
     this.renderObject(credits);

@@ -75,12 +75,12 @@ public class Gameplay extends Background {
 		menu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MainMenu menu = new MainMenu(container, frame);
-        container.removeAll();
-        container.add(menu, BorderLayout.CENTER);
+				container.removeAll();
+				container.add(menu, BorderLayout.CENTER);
 
-        frame.pack();
-    		frame.setLocationRelativeTo(null);
-    		frame.setVisible(true);
+				frame.pack();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
 			}
 		});
 
