@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -154,5 +155,7 @@ public class Gameplay extends Background {
 		this.renderStash();
 		this.renderKwatro();
 		this.renderStudents();
+
+		Toolkit.getDefaultToolkit().sync();
 	}
 }
