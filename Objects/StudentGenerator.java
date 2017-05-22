@@ -74,19 +74,6 @@ public class StudentGenerator implements Runnable, LevelData {
 
 		int studentToEnter = 0;
 		while(this.university.isTimerActive()) {
-			// Student randomStudent = this.randStudent();
-
-			// this.university.positionStudent(rand.nextInt(5), randomStudent);
-			// this.university.log();
-
-			// // Pause
-			// try {
-			// 	if(this.university.getTime() > this.gameLength - 15)
-			// 		Thread.sleep((rand.nextInt(3) + 1) * 2000);
-			// 	else
-			// 		Thread.sleep(rand.nextInt(this.gameLength / this.maxStudents) * 1500);
-			// } catch(Exception e) {}
-
 			while(this.isRendered(studentToEnter)) studentToEnter = rand.nextInt(this.levelStudents.size());
 			renderedStudents.add(studentToEnter);
 

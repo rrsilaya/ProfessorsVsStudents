@@ -5,12 +5,13 @@ import java.io.File;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
 public class ObjectRendered extends JPanel {
 	private int x, y;
-	private BufferedImage img;
+	protected BufferedImage img;
 
 	public ObjectRendered(int x, int y, String path) {
 		this.x = x - 1;

@@ -171,6 +171,10 @@ public class University implements Colorable {
 		return this.fund;
 	}
 
+	public Timer getTimer() {
+		return this.timer;
+	}
+
 	public int getTime() {
 		return this.timer.getTime();
 	}

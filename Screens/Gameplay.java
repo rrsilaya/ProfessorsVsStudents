@@ -4,6 +4,7 @@ import pvs.objects.ObjectRendered;
 import pvs.objects.Sprite;
 import pvs.objects.Button;
 import pvs.objects.Text;
+import pvs.objects.Timer;
 import pvs.University;
 import pvs.essentials.*;
 
@@ -70,6 +71,9 @@ public class Gameplay extends Background {
 				System.out.println("Modal should show here.");
 			}
 		});
+
+		// this.renderObject(this.university.getTimer());
+		this.add(this.university.getTimer());
 
 		this.repaint();
 	}
