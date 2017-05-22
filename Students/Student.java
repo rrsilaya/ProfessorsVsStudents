@@ -3,7 +3,6 @@ import pvs.University;
 
 public abstract class Student extends GameElement implements Runnable {
 	protected int movementSpeed;
-	protected int pos = 300; // to be moved to sprite class
 
 	public Student(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics, int movementSpeed) {
 		super(hitPoints, dmgPoints, atkSpeed, type, graphics);
@@ -15,15 +14,15 @@ public abstract class Student extends GameElement implements Runnable {
 	public void run() {
 		Professor toAttack;
 
-		while(this.hitPoints != 0 && this.pos != 0) {
-			this.pos -= this.movementSpeed; // movement
+		while(this.hitPoints != 0 && this.x != 0) {
+			this.x -= this.movementSpeed / 15; // movement
 
-			if(this.pos / 30 < this.arrX) { // movement in array
+			if(this.x / 115 < this.arrX) { // movement in array
 				// this.university.repositionStudent(this.arrX, --this.arrX, this);
 				this.arrX--;
 				this.university.log();
 			}
-
+			this.repaint();
 			toAttack = this.university.frontProfessor(this.arrX, this.arrY);
 			while(toAttack != null) {
 				this.attack(toAttack);
@@ -36,7 +35,7 @@ public abstract class Student extends GameElement implements Runnable {
 			}
 
 			try {
-				Thread.sleep(3500);
+				Thread.sleep(80);
 			} catch(Exception e) {}
 		}
 
