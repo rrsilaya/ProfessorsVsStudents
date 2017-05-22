@@ -1,5 +1,8 @@
 package pvs.screens;
 
+import pvs.objects.ObjectRendered;
+import pvs.objects.Button;
+
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -23,8 +26,16 @@ public class Background extends JPanel {
 		try {
 			this.img = ImageIO.read(new File(this.path));
 		} catch(Exception e) {}
+	}
 
-		this.repaint();
+	protected void renderObject(ObjectRendered object) {
+		object.setLocation(object.getX(), object.getY());
+		this.add(object);
+	}
+
+	protected void renderObject(Button btn) {
+		btn.setLocation(btn.getX(), btn.getY());
+		this.add(btn);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public final class CoffeeMaker extends Professor {
 	private final static String TYPE = "Coffee Maker";
 	private final static int SALARY = 200;
 	private final static int COOLDOWN = 35;
-	private final static String GRAPHICS = ".png";
+	private final static String GRAPHICS = "Assets/Professors/CoffeeMaker.png";
 
 	public CoffeeMaker() {
 		super(HIT_POINTS,

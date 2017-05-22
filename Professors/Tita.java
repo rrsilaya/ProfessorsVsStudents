@@ -8,7 +8,7 @@ public final class Tita extends Professor {
 	private final static String TYPE = "Tita";
 	private final static int SALARY = 50;
 	private final static int COOLDOWN = 20;
-	private final static String GRAPHICS = ".png";
+	private final static String GRAPHICS = "Assets/Professors/Tita.png";
 
 	public Tita() {
 		super(HIT_POINTS,

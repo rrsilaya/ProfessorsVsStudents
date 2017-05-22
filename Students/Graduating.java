@@ -6,7 +6,7 @@ public final class Graduating extends Student {
 	private final static int DMG_POINTS = 25;
 	private final static int ATK_SPEED = 15;
 	private final static String TYPE = "Graduating";
-	private final static String GRAPHICS = ".png";
+	private final static String GRAPHICS = "Assets/Students/Graduating.png";
 	private final static int MOVEMENT_SPEED = 25;
 
 	public Graduating() {

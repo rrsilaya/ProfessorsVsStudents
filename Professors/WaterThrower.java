@@ -8,7 +8,7 @@ public final class WaterThrower extends Professor {
 	private final static String TYPE = "Water Thrower";
 	private final static int SALARY = 150;
 	private final static int COOLDOWN = 20;
-	private final static String GRAPHICS = ".png";
+	private final static String GRAPHICS = "Assets/Professors/WaterThrower.png";
 
 	public WaterThrower() {
 		super(HIT_POINTS,
