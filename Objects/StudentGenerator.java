@@ -42,7 +42,7 @@ public class StudentGenerator implements Runnable, LevelData {
 	private Student randStudent() {
 		Random rand = new Random();
 
-		switch(rand.nextInt(2)) {
+		switch(rand.nextInt(3)) {
 			case 0:
 				return new Freshie();
 			case 1:
