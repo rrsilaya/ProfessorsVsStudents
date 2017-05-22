@@ -28,10 +28,6 @@ public class Background extends JPanel {
 		} catch(Exception e) {}
 	}
 
-	// protected void renderObject(Graphics2D g2d, ObjectRendered object) {
-	// 	g2d.drawImage(object.getImage(), object.getX(), object.getY(), null);
-	// }
-
 	protected void renderObject(ObjectRendered object) {
 		object.setLocation(object.getX(), object.getY());
 		this.add(object);
