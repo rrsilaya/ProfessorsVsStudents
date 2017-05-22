@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Gameplay extends Background implements Runnable {
+public class Gameplay extends Background {
 	private BufferedImage background;
 	private University university;
 	private ArrayList<JPanel> lines;
@@ -38,11 +38,11 @@ public class Gameplay extends Background implements Runnable {
 		// Back-end Integration
 		this.university = new University(1);
 
-		Tita waterThrower1 = new Tita();
-		Tita waterThrower2 = new Tita();
-		Tita waterThrower3 = new Tita();
-		Tita waterThrower4 = new Tita();
-		Tita waterThrower5 = new Tita();
+		Talker waterThrower1 = new Talker();
+		Talker waterThrower2 = new Talker();
+		Talker waterThrower3 = new Talker();
+		Talker waterThrower4 = new Talker();
+		Talker waterThrower5 = new Talker();
 
 		this.university.hireProfessor(0, 0, waterThrower1);
 		this.university.hireProfessor(0, 1, waterThrower2);
@@ -136,29 +136,12 @@ public class Gameplay extends Background implements Runnable {
 		}
 	}
 
-	private boolean inRendered(String uuid) {
-		for(int i = 0; i < this.renderedStudents.size(); i++)
-			if(this.renderedStudents.get(i).equals(uuid)) return true;
-		
-		return false;
-	}
-
-	private synchronized void renderStudents() {
+	private void renderStudents() {
 		ArrayList<Student> students = this.university.getStudents();
 
 		for(int i = 0; i < students.size(); i++) {
-			if(!this.inRendered(students.get(i).getUUID())) {
-				System.out.println("New student");
-				this.renderedStudents.add(students.get(i).getUUID());
-				this.lines.get(this.lines.size() - 1 - students.get(i).getArrY()).add(students.get(i));
-			}
+			this.lines.get(this.lines.size() - 1 - students.get(i).getArrY()).add(students.get(i));
 		}
-	}
-
-	@Override
-	public void run() {
-		while(true)
-			this.repaint();
 	}
 
 	@Override

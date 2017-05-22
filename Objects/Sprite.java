@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Sprite extends JPanel {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private BufferedImage img;
 
 	public Sprite(int x, int y, String path) {

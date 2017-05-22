@@ -21,9 +21,7 @@ public class MainFrame extends JFrame {
 		// container.add(menu, BorderLayout.CENTER);
 
 		Gameplay game = new Gameplay();
-		Thread gameThread = new Thread(game);
 		container.add(game, BorderLayout.CENTER);
-		// gameThread.start();
 
 		this.pack();
 		this.setLocationRelativeTo(null);
