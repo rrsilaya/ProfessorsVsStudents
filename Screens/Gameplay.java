@@ -13,6 +13,7 @@ import java.lang.Integer;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 
 import java.awt.image.BufferedImage;
@@ -25,9 +26,11 @@ import java.awt.event.ActionEvent;
 import javax.imageio.ImageIO;
 import java.io.File;
 
-public class Gameplay extends Background {
+public class Gameplay extends Background implements Runnable {
 	private BufferedImage background;
 	private University university;
+	private ArrayList<JPanel> lines;
+	private ArrayList<String> renderedStudents;
 
 	public Gameplay() {
 		super("Assets/UI/Gameplay/Background.jpg");
@@ -46,6 +49,18 @@ public class Gameplay extends Background {
 		this.university.hireProfessor(0, 2, waterThrower3);
 		this.university.hireProfessor(0, 3, waterThrower4);
 		this.university.hireProfessor(0, 4, waterThrower5);
+
+		// Element Layers
+		this.lines = new ArrayList<JPanel>();
+		for(int i = 0; i < 5; i++) {
+			this.lines.add(new JPanel());
+			this.lines.get(i).setSize(1000, 600);
+			this.lines.get(i).setOpaque(false);
+			this.add(this.lines.get(i), i);
+		}
+
+		// UUID Holder
+		this.renderedStudents = new ArrayList<String>();
 
 		// Instantiate Menu Button
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
@@ -115,8 +130,35 @@ public class Gameplay extends Background {
 		ArrayList<Professor> professors = this.university.getProfessors();
 
 		for(int i = 0; i < professors.size(); i++) {
-			this.add(professors.get(i));
+			JPanel pane = this.lines.get(this.lines.size() - 1 - professors.get(i).getArrY());
+
+			pane.add(professors.get(i));
 		}
+	}
+
+	private boolean inRendered(String uuid) {
+		for(int i = 0; i < this.renderedStudents.size(); i++)
+			if(this.renderedStudents.get(i).equals(uuid)) return true;
+		
+		return false;
+	}
+
+	private synchronized void renderStudents() {
+		ArrayList<Student> students = this.university.getStudents();
+
+		for(int i = 0; i < students.size(); i++) {
+			if(!this.inRendered(students.get(i).getUUID())) {
+				System.out.println("New student");
+				this.renderedStudents.add(students.get(i).getUUID());
+				this.lines.get(this.lines.size() - 1 - students.get(i).getArrY()).add(students.get(i));
+			}
+		}
+	}
+
+	@Override
+	public void run() {
+		while(true)
+			this.repaint();
 	}
 
 	@Override
@@ -129,5 +171,6 @@ public class Gameplay extends Background {
 		this.renderProfessors();
 		this.renderStash();
 		this.renderKwatro();
+		this.renderStudents();
 	}
 }

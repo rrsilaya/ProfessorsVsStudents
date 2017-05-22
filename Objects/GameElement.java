@@ -12,6 +12,7 @@ public abstract class GameElement extends Sprite {
 	protected String graphics;
 	protected University university;
 	protected int arrX, arrY; // positions in the array of elements
+	protected String uuid;
 
 	public GameElement(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics) {
 		super(0, 0, graphics);
@@ -20,6 +21,7 @@ public abstract class GameElement extends Sprite {
 		this.atkSpeed = atkSpeed;
 		this.type = type;
 		this.graphics = graphics;
+		this.uuid = UUID.randomUUID().toString();
 	}
 
 	public void attack(GameElement element) {
@@ -46,8 +48,8 @@ public abstract class GameElement extends Sprite {
 	}
 
 	public void removeFromScreen() {
-		this.setX(-1000);
-		this.setY(-1000);
+		this.setX(-100);
+		this.setY(-100);
 	}
 
 	public void bindUniversity(University university) {
@@ -73,5 +75,9 @@ public abstract class GameElement extends Sprite {
 
 	public int getArrY() {
 		return this.arrY;
+	}
+
+	public String getUUID() {
+		return this.uuid;
 	}
 }
