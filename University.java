@@ -7,6 +7,7 @@ import pvs.essentials.GameElement;
 import pvs.essentials.Professor;
 import pvs.essentials.Student;
 
+import pvs.objects.Money;
 import pvs.objects.Timer;
 import pvs.objects.Colorable;
 import pvs.objects.StudentGenerator;
@@ -21,6 +22,9 @@ public class University implements Colorable {
 
 	private char[][] map; // "visual" representation
 
+	private Money fund;
+	private ArrayList<Thread> moneyThread;
+
 	private StudentGenerator randomizer;
 	private Thread randomizerThread;
 	private Timer timer;
@@ -28,10 +32,7 @@ public class University implements Colorable {
 
 	private int level;
 	private int maxStudentCount;
-	private int fund;
 	private boolean isHellWeek;
-
-	private String removedElement_uuid;
 
 	private final static int GAME_LENGTH = 180;
 	private final static int SCOPE = 6;
@@ -53,11 +54,14 @@ public class University implements Colorable {
 		this.students = new ArrayList<Student>();
 		this.map = new char[University.MAX_ROW][University.MAX_COL];
 
+		this.fund = new Money(this);
+
 		this.randomizer = new StudentGenerator(University.GAME_LENGTH, 20, this);
 		this.timer = new Timer(University.GAME_LENGTH, this);
 
 		this.professorsThread = new ArrayList<Thread>();
 		this.studentsThread = new ArrayList<Thread>();
+		this.moneyThread = new ArrayList<Thread>();
 		this.randomizerThread = new Thread(this.randomizer);
 		this.timerThread = new Thread(timer);
 
@@ -85,9 +89,8 @@ public class University implements Colorable {
 	}
 
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
-		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
+		if(professor.canBeHired(this.getFund()) && !this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
-			professor.setUIPosition(85, y * 100);
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
@@ -140,20 +143,14 @@ public class University implements Colorable {
 	public synchronized void elementRemover() {
 		// Professors
 		for(int i = 0; i < this.professors.size(); i++)
-			if(this.professors.get(i).getHP() == 0)
-				this.professors.remove(i);
+			if(this.professors.get(i).getHP() == 0) this.professors.remove(i);
 		
 		// Students
 		for(int i = 0; i < this.students.size(); i++)
-			if(this.students.get(i).getHP() == 0)
-				this.students.remove(i);
+			if(this.students.get(i).getHP() == 0) this.students.remove(i);
 	}
 
 	// Setters
-	public void addFund(int amount) {
-		this.fund += amount;
-	}
-
 	void toggleHellWeek() {
 		this.isHellWeek = !this.isHellWeek;
 	}
@@ -164,7 +161,7 @@ public class University implements Colorable {
 	}
 
 	public int getFund() {
-		return this.fund;
+		return this.fund.getMoney();
 	}
 
 	public int getTime() {
@@ -185,10 +182,6 @@ public class University implements Colorable {
 
 	public ArrayList<Professor> getProfessors() {
 		return this.professors;
-	}
-
-	public ArrayList<Student> getStudents() {
-		return this.students;
 	}
 
 	// Helpers
