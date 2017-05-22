@@ -4,10 +4,10 @@ package pvs.objects;
 
 public interface LevelData {
 	public final static int[][] _students = {
-		// Level One (max 30)
+		// Level One (max 25)
 		{
-			15, // Freshie
-			12, // Sabaw
+			12, // Freshie
+			10, // Sabaw
 			 3  // Graduating
 		},
 
