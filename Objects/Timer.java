@@ -21,31 +21,16 @@ public class Timer implements Runnable {
 			Thread.sleep(7500);
 		} catch(Exception e) {}
 
-		switch(this.purpose) {
-			case COUNTDOWN:
-				while(this.time != 0) {
-					this.university.log();
-					this.time -= this.interval;
+		while(this.time != 0) {
+			this.university.log();
+			this.time -= this.interval;
 
-					try {
-						Thread.sleep(1000);
-					} catch(Exception e) {}
-				}
-
-				this.isActive = false;
-				break;
-			case TIMER:
-				while(this.isActive) {
-					this.university.log();
-					this.time += this.interval;
-
-					try {
-						Thread.sleep(1000);
-					} catch(Exception e) {}
-				}
-
-				break;
+			try {
+				Thread.sleep(1000);
+			} catch(Exception e) {}
 		}
+
+		this.isActive = false;
 	}
 
 	// Setters
@@ -60,10 +45,6 @@ public class Timer implements Runnable {
 
 	public int getTime() {
 		return this.time;
-	}
-
-	public int getPurpose() {
-		return this.purpose;
 	}
 
 	public boolean isHellWeek() {
