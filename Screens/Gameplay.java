@@ -4,6 +4,7 @@ import pvs.objects.ObjectRendered;
 import pvs.objects.Sprite;
 import pvs.objects.Button;
 import pvs.objects.Text;
+import pvs.objects.MainFrame;
 import pvs.University;
 import pvs.essentials.*;
 
@@ -20,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -28,15 +31,19 @@ import java.io.File;
 
 public class Gameplay extends Background {
 	private BufferedImage background;
+	private Container container;
+	private MainFrame frame;
 	private University university;
 	private ArrayList<JPanel> lines;
 	private ArrayList<String> renderedStudents;
 
-	public Gameplay() {
+	public Gameplay(Container container, MainFrame frame) {
 		super("Assets/UI/Gameplay/Background.jpg");
 
 		// Back-end Integration
 		this.university = new University(1);
+		this.container = container;
+		this.frame = frame;
 
 		Talker waterThrower1 = new Talker();
 		Talker waterThrower2 = new Talker();
@@ -67,7 +74,13 @@ public class Gameplay extends Background {
 		this.renderObject(menu_btn);
 		menu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Modal should show here.");
+				MainMenu menu = new MainMenu(container, frame);
+        container.removeAll();
+        container.add(menu, BorderLayout.CENTER);
+
+        frame.pack();
+    		frame.setLocationRelativeTo(null);
+    		frame.setVisible(true);
 			}
 		});
 
@@ -79,7 +92,7 @@ public class Gameplay extends Background {
 		Button talker_card = new Button(214, -12, "Assets/UI/Gameplay/Cards/Talker.png");
 		Button waterThrower_card = new Button(298, -12, "Assets/UI/Gameplay/Cards/WaterThrower.png");
 		Button coffeeMaker_card = new Button(382, -12, "Assets/UI/Gameplay/Cards/CoffeeMaker.png");
-		
+
 		this.renderObject(tita_card);
 		this.renderObject(talker_card);
 		this.renderObject(waterThrower_card);
