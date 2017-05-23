@@ -84,7 +84,7 @@ public class Gameplay extends Background {
 		this.renderObject(talker_card);
 		this.renderObject(waterThrower_card);
 		this.renderObject(coffeeMaker_card);
-		this.add(new Text(40, 55, 5000));
+		this.add(new Text(40, 55, this.university.getFund()));
 
 		/* Mouse Listeners */
 			// Tita
