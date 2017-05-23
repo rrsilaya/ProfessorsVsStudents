@@ -34,9 +34,9 @@ import java.io.File;
 
 public class Gameplay extends Background {
 	private BufferedImage background;
-	private ObjectRendered image;
 	private Container container;
 	private MainFrame frame;
+	private Text money;
 	private University university;
 	private ArrayList<JPanel> lines;
 	private ArrayList<String> renderedStudents;
@@ -51,21 +51,6 @@ public class Gameplay extends Background {
 		this.university = new University(1);
 		this.container = container;
 		this.frame = frame;
-
-		/*
-		Talker waterThrower1 = new Talker();
-		Talker waterThrower2 = new Talker();
-		Talker waterThrower3 = new Talker();
-		Talker waterThrower4 = new Talker();
-		Talker waterThrower5 = new Talker();
-
-		this.university.hireProfessor(0, 0, waterThrower1);
-		this.university.hireProfessor(0, 1, waterThrower2);
-		this.university.hireProfessor(0, 2, waterThrower3);
-		this.university.hireProfessor(0, 3, waterThrower4);
-		this.university.hireProfessor(0, 4, waterThrower5);
-		*/
-
 
 		// Element Layers
 		this.lines = new ArrayList<JPanel>();
@@ -94,6 +79,9 @@ public class Gameplay extends Background {
 			}
 		});
 
+		this.money = new Text(40, 55, this.university.getFund());
+		this.add(this.money);
+
 		this.repaint();
 	}
 
@@ -107,7 +95,6 @@ public class Gameplay extends Background {
 		this.renderObject(talker_card);
 		this.renderObject(waterThrower_card);
 		this.renderObject(coffeeMaker_card);
-		this.add(new Text(40, 55, 5000));
 
 		ObjectRendered tita_Image = new ObjectRendered(mouseX, mouseY, "Assets/Professors/Tita.png");
 		ObjectRendered talker_Image = new ObjectRendered(mouseX, mouseY, "Assets/Professors/Talker.png");
@@ -115,22 +102,22 @@ public class Gameplay extends Background {
 		ObjectRendered coffeeMaker_Image = new ObjectRendered(mouseX, mouseY, "Assets/Professors/CoffeeMaker.png");
 
 		/* Mouse Listeners */
-			// Tita
-		tita_card.addMouseListener(new DragAndDrop(tita_Image, this.getGameplay(), 1));
-		tita_card.addMouseMotionListener(new DragAndDrop(tita_Image, this.getGameplay(), 1));
+		// Tita
+		tita_card.addMouseListener(new DragAndDrop(tita_Image, this.university, this.getGameplay(), 1));
+		tita_card.addMouseMotionListener(new DragAndDrop(tita_Image, this.university, this.getGameplay(), 1));
 
 		// Talker
-
-		talker_card.addMouseListener(new DragAndDrop(talker_Image, this.getGameplay(), 2));
-		talker_card.addMouseMotionListener(new DragAndDrop(talker_Image, this.getGameplay(), 2));
+		talker_card.addMouseListener(new DragAndDrop(talker_Image, this.university, this.getGameplay(), 2));
+		talker_card.addMouseMotionListener(new DragAndDrop(talker_Image, this.university, this.getGameplay(), 2));
 
 		// WaterThrower
-		waterThrower_card.addMouseListener(new DragAndDrop(waterThrower_Image, this.getGameplay(), 3));
-		waterThrower_card.addMouseMotionListener(new DragAndDrop(waterThrower_Image, this.getGameplay(), 3));
+		waterThrower_card.addMouseListener(new DragAndDrop(waterThrower_Image, this.university, this.getGameplay(), 3));
+		waterThrower_card.addMouseMotionListener(new DragAndDrop(waterThrower_Image, this.university, this.getGameplay(), 3));
 
 		// CoffeeMaker
-		coffeeMaker_card.addMouseListener(new DragAndDrop(coffeeMaker_Image, this.getGameplay(), 4));
-		coffeeMaker_card.addMouseMotionListener(new DragAndDrop(coffeeMaker_Image, this.getGameplay(), 4));
+		coffeeMaker_card.addMouseListener(new DragAndDrop(coffeeMaker_Image, this.university, this.getGameplay(), 4));
+		coffeeMaker_card.addMouseMotionListener(new DragAndDrop(coffeeMaker_Image, this.university, this.getGameplay(), 4));
+
 	}
 
 	private void renderKwatro() {
@@ -148,8 +135,11 @@ public class Gameplay extends Background {
 
 		for(int i = 0; i < professors.size(); i++) {
 			JPanel pane = this.lines.get(this.lines.size() - 1 - professors.get(i).getArrY());
-
 			pane.add(professors.get(i));
+
+			if (professors.get(i).getType().equals("Tita")){
+				this.renderMoney(professors.get(i));
+			}
 		}
 	}
 
@@ -158,6 +148,20 @@ public class Gameplay extends Background {
 
 		for(int i = 0; i < students.size(); i++) {
 			this.lines.get(this.lines.size() - 1 - students.get(i).getArrY()).add(students.get(i));
+		}
+	}
+
+	private void renderMoney(Professor professor){
+		if(professor.getChargeTime() == professor.getAtkSpeed() * 8){
+			this.university.addFund(professor.getSalary());
+			professor.resetChargeTime();
+
+			this.remove(this.money);
+			this.money = new Text(40, 55, this.university.getFund());
+			this.add(this.money);
+
+		}else{
+			professor.incChargeTime();
 		}
 	}
 
@@ -174,52 +178,54 @@ public class Gameplay extends Background {
 		this.renderStudents();
 	}
 
-	public void mouseDragging(ObjectRendered object, boolean mouseDragged, int mouseX, int mouseY, int value){
-		if(mouseDragged){
-			object.setCoordinates(mouseX, mouseY);
-			object.repaint();
-			this.add(object);
-			this.repaint();
-		}else{
-			this.remove(object);
-			if((mouseY /100) + 1 > 4){
-				mouseY = 300;
-			}
+	public void mouseDragging(ObjectRendered object, int mouseX, int mouseY){
+		object.setCoordinates(mouseX, mouseY);
+		object.repaint();
+		this.add(object);
+		this.repaint();
+	}
 
-			if(mouseY < 0){
-				switch (value){
-					case 1:
-						this.university.hireProfessor(mouseX/ 113, 0, new Tita());
-						break;
-					case 2:
-						this.university.hireProfessor(mouseX/ 113, 0, new Talker());
-						break;
-					case 3:
-						this.university.hireProfessor(mouseX/ 113, 0, new WaterThrower());
-						break;
-					case 4:
-						this.university.hireProfessor(mouseX/ 113, 0 , new CoffeeMaker());
-						break;
-				}
-			}else{
-				switch (value){
-					case 1:
-						this.university.hireProfessor(mouseX/ 113, (mouseY / 100) + 1, new Tita());
-						break;
-					case 2:
-						this.university.hireProfessor(mouseX/ 113, (mouseY / 100) + 1, new Talker());
-						break;
-					case 3:
-						this.university.hireProfessor(mouseX/ 113, (mouseY / 100) + 1, new WaterThrower());
-						break;
-					case 4:
-						this.university.hireProfessor(mouseX/ 113, (mouseY / 100) + 1 , new CoffeeMaker());
-						break;
-				}
-			}
+	public void mouseDropping(ObjectRendered object, int mouseX, int mouseY, int value){
+		this.remove(object);
 
-			this.repaint();
+		if(mouseY / 100 > 4){
+			mouseY = 400;
+		}else if(mouseY / 100 < 0){
+			mouseY = 0;
 		}
+
+		switch(value){
+			case 1:
+				if(!this.university.isOccupied(mouseX / 113, (mouseY / 100))){
+					this.university.hireProfessor(mouseX / 113, (mouseY / 100), new Tita());
+					this.university.decFund(new Tita().getSalary());
+				}
+				break;
+			case 2:
+				if(!this.university.isOccupied(mouseX / 113, (mouseY / 100))){
+					this.university.hireProfessor(mouseX / 113, (mouseY / 100), new Talker());
+					this.university.decFund(new Talker().getSalary());
+				}
+				break;
+			case 3:
+				if(!this.university.isOccupied(mouseX / 113, (mouseY / 100))){
+					this.university.hireProfessor(mouseX / 113, (mouseY / 100), new WaterThrower());
+					this.university.decFund(new WaterThrower().getSalary());
+				}
+				break;
+			case 4:
+				if(!this.university.isOccupied(mouseX / 113, (mouseY / 100))){
+					this.university.hireProfessor(mouseX / 113, (mouseY / 100) , new CoffeeMaker());
+					this.university.decFund(new CoffeeMaker().getSalary());
+				}
+				break;
+		}
+
+		this.remove(this.money);
+		this.money = new Text(40, 55, this.university.getFund());
+		this.add(this.money);
+
+		this.repaint();
 	}
 
 	public Gameplay getGameplay(){
