@@ -152,7 +152,7 @@ public class University implements Colorable {
 			if(this.students.get(i).getHP() == 0)
 				this.students.remove(i);
 	}
-
+	
 	// Setters
 	public void addFund(int amount) {
 		this.fund += amount;
