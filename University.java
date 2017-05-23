@@ -10,6 +10,7 @@ import pvs.essentials.Student;
 import pvs.objects.Timer;
 import pvs.objects.Colorable;
 import pvs.objects.StudentGenerator;
+import pvs.objects.Kwatro;
 
 public class University implements Colorable {
 	private ArrayList<Professor> professors;
@@ -23,6 +24,7 @@ public class University implements Colorable {
 	private Thread randomizerThread;
 	private Timer timer;
 	private Thread timerThread;
+	private Kwatro[] kwatro;
 
 	private int level;
 	private int maxStudentCount;
@@ -56,6 +58,9 @@ public class University implements Colorable {
 
 		this.randomizerThread = new Thread(this.randomizer);
 		this.timerThread = new Thread(timer);
+
+		this.kwatro = new Kwatro[5];
+		for(int i = 0; i < 5; i++) this.kwatro[i] = new Kwatro(i);
 
 		Random rand = new Random();
 
@@ -164,6 +169,11 @@ public class University implements Colorable {
 	public void endGame() {
 		this.isActive = false;
 	}
+
+	public void invokeKwatro(int row, Student student) {
+			this.kwatro[row].giveKwatro(student);
+			this.elementRemover();
+	}
 	
 	// Setters
 	public void addFund(int amount) {
@@ -213,6 +223,10 @@ public class University implements Colorable {
 
 	public ArrayList<Student> getStudents() {
 		return this.students;
+	}
+
+	public Kwatro[] getKwatro() {
+		return this.kwatro;
 	}
 
 	// Helpers

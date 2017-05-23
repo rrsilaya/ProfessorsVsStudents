@@ -5,6 +5,7 @@ import pvs.objects.Sprite;
 import pvs.objects.Button;
 import pvs.objects.Text;
 import pvs.objects.Timer;
+import pvs.objects.Kwatro;
 import pvs.University;
 import pvs.essentials.*;
 
@@ -39,17 +40,17 @@ public class Gameplay extends Background {
 		// Back-end Integration
 		this.university = new University(1);
 
-		Talker waterThrower1 = new Talker();
-		Talker waterThrower2 = new Talker();
-		Talker waterThrower3 = new Talker();
-		Talker waterThrower4 = new Talker();
-		Talker waterThrower5 = new Talker();
+		Tita waterThrower1 = new Tita();
+		// Tita waterThrower2 = new Tita();
+		// Tita waterThrower3 = new Tita();
+		// Tita waterThrower4 = new Tita();
+		// Tita waterThrower5 = new Tita();
 
 		this.university.hireProfessor(0, 0, waterThrower1);
-		this.university.hireProfessor(0, 1, waterThrower2);
-		this.university.hireProfessor(0, 2, waterThrower3);
-		this.university.hireProfessor(0, 3, waterThrower4);
-		this.university.hireProfessor(0, 4, waterThrower5);
+		// this.university.hireProfessor(0, 1, waterThrower2);
+		// this.university.hireProfessor(0, 2, waterThrower3);
+		// this.university.hireProfessor(0, 3, waterThrower4);
+		// this.university.hireProfessor(0, 4, waterThrower5);
 
 		// Element Layers
 		this.lines = new ArrayList<JPanel>();
@@ -117,13 +118,16 @@ public class Gameplay extends Background {
 	}
 
 	private void renderKwatro() {
-		ArrayList<ObjectRendered> kwatro = new ArrayList<ObjectRendered>();
-		String path = "Assets/UI/Gameplay/Kwatro.png";
+		// ArrayList<ObjectRendered> kwatro = new ArrayList<ObjectRendered>();
+		// String path = "Assets/UI/Gameplay/Kwatro.png";
 
-		for(int i = 1; i <= 5; i++) {
-			kwatro.add(new ObjectRendered(10, 100 * i, path));
-			this.renderObject(kwatro.get(i - 1));
-		}
+		// for(int i = 1; i <= 5; i++) {
+		// 	kwatro.add(new ObjectRendered(10, 100 * i, path));
+		// 	this.renderObject(kwatro.get(i - 1));
+		// }
+		Kwatro[] kwatro = this.university.getKwatro();
+
+		for(int i = 0; i < 5; i++) this.add(kwatro[i]);
 	}
 
 	private void renderProfessors() {
