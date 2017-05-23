@@ -1,71 +1,51 @@
 package pvs.screens;
 
-import pvs.objects.MainFrame;
-import pvs.objects.ObjectRendered;
-import pvs.objects.Sprite;
+
 import pvs.objects.Button;
-import pvs.objects.Text;
-import pvs.University;
-import pvs.essentials.*;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JLayeredPane;
-import javax.swing.SwingConstants;
-
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.imageio.ImageIO;
-import java.io.File;
+public class MainMenu extends Background {
+	private static final String MAIN_MENU_BG = "Assets/UI/MainMenu.jpg";
+	private static final String PLAY = "Assets/UI/Buttons/play.png";
+	private static final String LOAD = "Assets/UI/Buttons/credits.png";
+	private static final String CREDITS = "Assets/UI/Buttons/credits.png";
+	
+	public MainMenu() {
+		super(MAIN_MENU_BG);
+		playButton();
+		loadButton();
+		creditsButton();
+	}
+	
+	private void playButton() {
+		Button playGame = new Button(384, 250, PLAY);
+		add(playGame);
 
+		playGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+	}
 
-public class MainMenu extends Background{
-  private BufferedImage background;
-  private Container container;
-  private MainFrame frame;
+	private void loadButton() {
+		Button loadGame = new Button(384, 362, LOAD);
+		add(loadGame);
 
-  public MainMenu(Container container, MainFrame frame){
-    super("Assets/UI/MainMenu.jpg");
-    this.container = container;
-    this.frame = frame;
-    this.init_menu();
-  }
+		loadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+	}
 
-  private void init_menu(){
-    //Buttons
-    Button playGame = new Button(750, 50, "Assets/UI/Buttons/play.png");
-    this.renderObject(playGame);
-    playGame.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        Gameplay game = new Gameplay(container, frame);
-        container.removeAll();
-        container.add(game, BorderLayout.CENTER);
+	private void creditsButton() {
+		Button creditsGame = new Button(384, 474, CREDITS);
+		add(creditsGame);
 
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-      }
-    });
-
-    Button credits = new Button(750, 150, "Assets/UI/Buttons/credits.png");
-    this.renderObject(credits);
-
-    this.repaint();
-  }
-
-  @Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-
-		g2d.drawImage(this.background, 0, 0, null);
+		creditsGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 	}
 }
