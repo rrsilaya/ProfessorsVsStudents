@@ -3,8 +3,9 @@ import pvs.University;
 
 public abstract class Professor extends GameElement implements Runnable {
 	protected int salary;
-	protected int state;
+	protected int state = 0;
 	protected int cooldown;
+	protected int chargeTime = 0;
 	protected boolean isAttacking;
 
 	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics,
@@ -20,9 +21,29 @@ public abstract class Professor extends GameElement implements Runnable {
 		this.state = 0;
 	}
 
+	public void incState(){
+		this.state++;
+	}
+
+	public void resetChargeTime() {
+		this.chargeTime = 0;
+	}
+
+	public void incChargeTime(){
+		this.chargeTime++;
+	}
+
 	// Getters
 	public int getSalary() {
 		return this.salary;
+	}
+
+	public int getState() {
+		return this.state;
+	}
+
+	public int getChargeTime() {
+		return this.chargeTime;
 	}
 
 	public boolean canBeHired() {
