@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.BorderLayout;
 
 import pvs.screens.MainMenu;
+import pvs.screens.Gameplay;
 
 public class MainFrame extends JFrame {
 	public MainFrame() {
@@ -20,8 +21,11 @@ public class MainFrame extends JFrame {
 		// Background menu = new Background("Assets/UI/MainMenu.jpg");
 		// container.add(menu, BorderLayout.CENTER);
 
-		MainMenu main = new MainMenu(container, this);
-		container.add(main, BorderLayout.CENTER);
+		MainMenu mainMenu = new MainMenu(this, container);
+		container.add(mainMenu, BorderLayout.CENTER);
+
+		//Gameplay game = new Gameplay(container, this);
+		//container.add(game, BorderLayout.CENTER);
 
 		this.pack();
 		this.setLocationRelativeTo(null);
