@@ -9,6 +9,7 @@ import pvs.essentials.Student;
 
 import pvs.objects.Timer;
 import pvs.objects.Colorable;
+import pvs.objects.Money;
 import pvs.objects.StudentGenerator;
 
 public class University implements Colorable {
@@ -22,13 +23,14 @@ public class University implements Colorable {
 	private char[][] map; // "visual" representation
 
 	private StudentGenerator randomizer;
+	private Money money;
 	private Thread randomizerThread;
 	private Timer timer;
 	private Thread timerThread;
 
 	private int level;
 	private int maxStudentCount;
-	private int fund;
+	private int fund = 0;
 	private boolean isHellWeek;
 
 	private final static int GAME_LENGTH = 240;
@@ -56,6 +58,8 @@ public class University implements Colorable {
 
 		this.randomizer = new StudentGenerator(University.GAME_LENGTH, 20, this);
 		this.timer = new Timer(University.GAME_LENGTH, this);
+		this.money = new Money();
+		money.pick(this);
 
 		this.randomizerThread = new Thread(this.randomizer);
 		this.timerThread = new Thread(timer);
@@ -71,7 +75,7 @@ public class University implements Colorable {
 		this.timerThread.start();
 	}
 
-	private boolean isOccupied(int x, int y) {
+	public boolean isOccupied(int x, int y) {
 		Professor professor;
 
 		for(int i = 0; i < this.professors.size(); i++) {
@@ -103,7 +107,6 @@ public class University implements Colorable {
 		student.bindUniversity(this);
 
 		this.students.add(student);
-
 		// Add Threads
 		this.studentsThread.add(new Thread(student));
 		// this.studentsThread.get(this.studentsThread.size() - 1).start();
@@ -121,7 +124,8 @@ public class University implements Colorable {
 
 			if(student.getArrY() == y) {
 				for(int proximity = 0; proximity < University.SCOPE; proximity++) {
-					if(student.getArrX() == x + proximity) return student;
+					if(student.getArrX() == x + proximity)
+						return student;
 				}
 			}
 		}
@@ -135,7 +139,8 @@ public class University implements Colorable {
 		for(int i = 0; i < this.professors.size(); i++) {
 			professor = this.professors.get(i);
 
-			if(professor.getArrX() == x && professor.getArrY() == y) return professor;
+			if(professor.getArrX() == x && professor.getArrY() == y)
+				return professor;
 		}
 
 		return null;
@@ -156,6 +161,10 @@ public class University implements Colorable {
 	// Setters
 	public void addFund(int amount) {
 		this.fund += amount;
+	}
+
+	public void decFund(int amount) {
+		this.fund -= amount;
 	}
 
 	void toggleHellWeek() {
