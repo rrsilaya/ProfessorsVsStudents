@@ -24,7 +24,6 @@ public class MenuDialog extends JDialog {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 500, 400);
 	
-
 		this.container = this.getContentPane();
 		this.container.setLayout(null);
 		background();
