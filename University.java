@@ -12,8 +12,6 @@ import pvs.objects.Colorable;
 import pvs.objects.StudentGenerator;
 
 public class University implements Colorable {
-	private ArrayList<Professor> profRoster; // List of available prof (?)
-
 	private ArrayList<Professor> professors;
 	private ArrayList<Thread> professorsThread;
 	private ArrayList<Student> students;
@@ -30,8 +28,9 @@ public class University implements Colorable {
 	private int maxStudentCount;
 	private int fund;
 	private boolean isHellWeek;
+	private boolean isActive;
 
-	private final static int GAME_LENGTH = 240;
+	private final static int GAME_LENGTH = 30;
 	private final static int SCOPE = 6;
 
 	// Game Area
@@ -45,8 +44,6 @@ public class University implements Colorable {
 	private final static char NONE_ID = ' ';
 
 	public University(int level) {
-		this.profRoster = new ArrayList<Professor>();
-
 		this.professors = new ArrayList<Professor>();
 		this.students = new ArrayList<Student>();
 		this.map = new char[University.MAX_ROW][University.MAX_COL];
@@ -65,6 +62,7 @@ public class University implements Colorable {
 		this.level = level;
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
 		this.isHellWeek = false;
+		this.isActive = true;
 
 		// Start Required Threads
 		this.randomizerThread.start();
@@ -152,6 +150,20 @@ public class University implements Colorable {
 			if(this.students.get(i).getHP() == 0)
 				this.students.remove(i);
 	}
+
+	public void purgeStudents() {
+		ArrayList<Student> newStudents = new ArrayList<Student>();
+
+		for(int i = 0; i < this.students.size(); i++) {
+			if(this.students.get(i).getArrX() != 9) newStudents.add(this.students.get(i));
+		}
+
+		this.students = newStudents; // replace the students
+	}
+
+	public void endGame() {
+		this.isActive = false;
+	}
 	
 	// Setters
 	public void addFund(int amount) {
@@ -185,6 +197,10 @@ public class University implements Colorable {
 
 	public boolean isHellWeek() {
 		return this.timer.isHellWeek();
+	}
+
+	public boolean isActive() {
+		return this.isActive;
 	}
 
 	public synchronized boolean hasStudentsLeft() {
@@ -251,13 +267,6 @@ public class University implements Colorable {
 		GameElement element;
 
 		System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
-		// for(int i = 0; i < this.professors.size(); i++) {
-		// 	element = this.professors.get(i);
-
-		// 	System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
-		// 		Colorable.YELLOW, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
-		// }
-
 		for(int i = 0; i < this.students.size(); i++) {
 			element = this.students.get(i);
 

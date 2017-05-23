@@ -14,7 +14,7 @@ public abstract class Student extends GameElement implements Runnable {
 	public void run() {
 		Professor toAttack;
 
-		while(this.hitPoints != 0 && this.x != 0) {
+		while(this.hitPoints != 0 && this.x != 0 && this.university.isActive()) {
 			this.x -= this.movementSpeed / 15; // movement
 
 			if(this.x / 115 < this.arrX) { // movement in array
@@ -39,8 +39,7 @@ public abstract class Student extends GameElement implements Runnable {
 				Thread.sleep(80);
 			} catch(Exception e) {}
 		}
-
-		// this.hitPoints = 0; // kwatro ka na bui
+		
 		if(this.hitPoints == 0) {
 			this.removeFromScreen();
 			this.repaint();
