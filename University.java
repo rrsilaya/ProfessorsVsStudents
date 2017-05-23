@@ -86,7 +86,7 @@ public class University implements Colorable {
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
-			professor.setUIPosition(85, y * 100); // variable
+			professor.setUIPosition((85 * (x + 1)) + (28 * x), y * 100); // variable
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
@@ -130,7 +130,7 @@ public class University implements Colorable {
 	}
 
 	public synchronized Professor frontProfessor(int x, int y) {
-		Professor professor;		
+		Professor professor;
 
 		for(int i = 0; i < this.professors.size(); i++) {
 			professor = this.professors.get(i);
@@ -146,7 +146,7 @@ public class University implements Colorable {
 		for(int i = 0; i < this.professors.size(); i++)
 			if(this.professors.get(i).getHP() == 0)
 				this.professors.remove(i);
-		
+
 		// Students
 		for(int i = 0; i < this.students.size(); i++)
 			if(this.students.get(i).getHP() == 0)
