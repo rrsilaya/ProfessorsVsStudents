@@ -39,8 +39,8 @@ import java.io.File;
 
 public class Gameplay extends Background {
 	private BufferedImage background;
+	private MainFrame mainFrame;
 	private Container container;
-	private MainFrame frame;
 	private Text money;
 	private University university;
 	private ArrayList<JPanel> lines;
@@ -48,7 +48,7 @@ public class Gameplay extends Background {
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
 
-	public Gameplay(Container container, MainFrame frame) {
+	public Gameplay(MainFrame mainFrame, Container container) {
 		super("Assets/UI/Gameplay/Background.jpg");
 
 		// Back-end Integration
@@ -56,7 +56,7 @@ public class Gameplay extends Background {
 
 		/********** REVISE INTEGRATION ***********/
 		this.container = container;
-		this.frame = frame;
+		this.mainFrame = mainFrame;
 		/******* END *******/
 
 		// Element Layers
@@ -73,13 +73,13 @@ public class Gameplay extends Background {
 		this.renderObject(menu_btn);
 		menu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenu menu = new MainMenu(container, frame);
 				container.removeAll();
-				container.add(menu, BorderLayout.CENTER);
-
-				frame.pack();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
+				MenuDialog menuDialog = new MenuDialog(mainFrame, container);
+				menuDialog.setVisible(true);
+			
+				mainFrame.pack();
+				mainFrame.setLocationRelativeTo(null);
+				mainFrame.setVisible(true);
 			}
 		});
 
