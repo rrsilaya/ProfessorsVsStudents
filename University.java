@@ -9,6 +9,7 @@ import pvs.essentials.Student;
 
 import pvs.objects.Timer;
 import pvs.objects.Colorable;
+import pvs.objects.Money;
 import pvs.objects.StudentGenerator;
 import pvs.objects.Kwatro;
 
@@ -21,6 +22,7 @@ public class University implements Colorable {
 	private char[][] map; // "visual" representation
 
 	private StudentGenerator randomizer;
+	private Money money;
 	private Thread randomizerThread;
 	private Timer timer;
 	private Thread timerThread;
@@ -28,7 +30,7 @@ public class University implements Colorable {
 
 	private int level;
 	private int maxStudentCount;
-	private int fund;
+	private int fund = 0;
 	private boolean isHellWeek;
 	private boolean isActive;
 
@@ -55,6 +57,8 @@ public class University implements Colorable {
 
 		this.randomizer = new StudentGenerator(University.GAME_LENGTH, 20, this);
 		this.timer = new Timer(University.GAME_LENGTH, this);
+		this.money = new Money();
+		money.pick(this);
 
 		this.randomizerThread = new Thread(this.randomizer);
 		this.timerThread = new Thread(timer);
@@ -74,7 +78,7 @@ public class University implements Colorable {
 		this.timerThread.start();
 	}
 
-	private boolean isOccupied(int x, int y) {
+	public boolean isOccupied(int x, int y) {
 		Professor professor;
 
 		for(int i = 0; i < this.professors.size(); i++) {
@@ -89,7 +93,8 @@ public class University implements Colorable {
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
-			professor.setUIPosition(85 + (x * 115), y * 100); // variable
+			professor.setUIPosition((85 * (x + 1)) + (28 * x), y * 100); // variable
+			//professor.setUIPosition(85 + (x * 115), y * 100); // variable
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
@@ -106,7 +111,6 @@ public class University implements Colorable {
 		student.bindUniversity(this);
 
 		this.students.add(student);
-
 		// Add Threads
 		this.studentsThread.add(new Thread(student));
 		// this.studentsThread.get(this.studentsThread.size() - 1).start();
@@ -124,7 +128,8 @@ public class University implements Colorable {
 
 			if(student.getArrY() == y) {
 				for(int proximity = 0; proximity < University.SCOPE; proximity++) {
-					if(student.getArrX() == x + proximity) return student;
+					if(student.getArrX() == x + proximity)
+						return student;
 				}
 			}
 		}
@@ -133,12 +138,13 @@ public class University implements Colorable {
 	}
 
 	public synchronized Professor frontProfessor(int x, int y) {
-		Professor professor;		
+		Professor professor;
 
 		for(int i = 0; i < this.professors.size(); i++) {
 			professor = this.professors.get(i);
 
-			if(professor.getArrX() == x && professor.getArrY() == y) return professor;
+			if(professor.getArrX() == x && professor.getArrY() == y)
+				return professor;
 		}
 
 		return null;
@@ -149,7 +155,7 @@ public class University implements Colorable {
 		for(int i = 0; i < this.professors.size(); i++)
 			if(this.professors.get(i).getHP() == 0)
 				this.professors.remove(i);
-		
+
 		// Students
 		for(int i = 0; i < this.students.size(); i++)
 			if(this.students.get(i).getHP() == 0)
@@ -178,6 +184,10 @@ public class University implements Colorable {
 	// Setters
 	public void addFund(int amount) {
 		this.fund += amount;
+	}
+
+	public void decFund(int amount) {
+		this.fund -= amount;
 	}
 
 	void toggleHellWeek() {

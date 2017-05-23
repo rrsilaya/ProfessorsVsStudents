@@ -65,6 +65,10 @@ public abstract class GameElement extends Sprite {
 		return this.dmgPoints;
 	}
 
+	public int getAtkSpeed(){
+		return this.atkSpeed;
+	}
+
 	public String getType() {
 		return this.type;
 	}

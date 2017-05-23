@@ -41,6 +41,11 @@ public class ObjectRendered extends JPanel {
 		return this.y;
 	}
 
+	public void setCoordinates(int x, int y) {
+		this.x = x - 1;
+		this.y = y - 1;
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
