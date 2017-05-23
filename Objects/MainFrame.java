@@ -1,11 +1,17 @@
 package pvs.objects;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-import pvs.screens.MainMenu;
+import pvs.screens.Gameplay;
+import pvs.screens.Background;
+import pvs.objects.Button;
 
 public class MainFrame extends JFrame {
 	public MainFrame() {
@@ -15,13 +21,30 @@ public class MainFrame extends JFrame {
 		this.setResizable(false);
 
 		Container container = this.getContentPane();
-
-		// // Set Screens for Main Menu
-		// Background menu = new Background("Assets/UI/MainMenu.jpg");
-		// container.add(menu, BorderLayout.CENTER);
-
-		MainMenu main = new MainMenu(container, this);
+		JPanel main = new JPanel();
 		container.add(main, BorderLayout.CENTER);
+		main.setLayout(new CardLayout());
+		
+		Background mainMenu = new Background("Assets/UI/MainMenu.jpg");
+		Button playGame = new Button(750, 50, "Assets/UI/Buttons/play.png");
+		mainMenu.renderObject(playGame);
+		Button credits = new Button(750, 150, "Assets/UI/Buttons/credits.png");
+		mainMenu.renderObject(credits);
+
+		Gameplay game = new Gameplay(this);
+
+		main.add(mainMenu, "menu");
+		main.add(game, "game");
+
+		CardLayout cardLayout = (CardLayout) main.getLayout();
+
+		// Render Listeners
+		playGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "game");
+				game.startGame();
+			}
+		});
 
 		this.pack();
 		this.setLocationRelativeTo(null);

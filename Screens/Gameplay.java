@@ -48,14 +48,14 @@ public class Gameplay extends Background {
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
 
-	public Gameplay(Container container, MainFrame frame) {
+	public Gameplay(MainFrame frame) {
 		super("Assets/UI/Gameplay/Background.jpg");
 
 		// Back-end Integration
 		this.university = new University(1);
 
 		/********** REVISE INTEGRATION ***********/
-		this.container = container;
+		// this.container = container;
 		this.frame = frame;
 		/******* END *******/
 
@@ -70,25 +70,24 @@ public class Gameplay extends Background {
 
 		// Instantiate Menu Button
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
-		this.renderObject(menu_btn);
 		menu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainMenu menu = new MainMenu(container, frame);
-				container.removeAll();
-				container.add(menu, BorderLayout.CENTER);
-
-				frame.pack();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
+				// container.removeAll();
+				// MainMenu menu = new MainMenu(container, frame);
+				// container.add(menu, BorderLayout.CENTER);
+				// university.endGame();
+				// frame.pack();
+				// frame.setLocationRelativeTo(null);
+				// frame.setVisible(true);
 			}
 		});
+		this.renderObject(menu_btn);
 
+		this.add(this.university.getTimer());
 		this.money = new Text(40, 55, this.university.getFund());
 		this.add(this.money);
 		
-		this.add(this.university.getTimer());
-
-		this.repaint();
+		// this.repaint();
 	}
 
 	private void renderStash() {
@@ -109,20 +108,20 @@ public class Gameplay extends Background {
 
 		/* Mouse Listeners */
 		// Tita
-		tita_card.addMouseListener(new DragAndDrop(tita_Image, this.university, this.getGameplay(), 1));
-		tita_card.addMouseMotionListener(new DragAndDrop(tita_Image, this.university, this.getGameplay(), 1));
+		tita_card.addMouseListener(new DragAndDrop(tita_Image, this.university, this, 1));
+		tita_card.addMouseMotionListener(new DragAndDrop(tita_Image, this.university, this, 1));
 
 		// Talker
-		talker_card.addMouseListener(new DragAndDrop(talker_Image, this.university, this.getGameplay(), 2));
-		talker_card.addMouseMotionListener(new DragAndDrop(talker_Image, this.university, this.getGameplay(), 2));
+		talker_card.addMouseListener(new DragAndDrop(talker_Image, this.university, this, 2));
+		talker_card.addMouseMotionListener(new DragAndDrop(talker_Image, this.university, this, 2));
 
 		// WaterThrower
-		waterThrower_card.addMouseListener(new DragAndDrop(waterThrower_Image, this.university, this.getGameplay(), 3));
-		waterThrower_card.addMouseMotionListener(new DragAndDrop(waterThrower_Image, this.university, this.getGameplay(), 3));
+		waterThrower_card.addMouseListener(new DragAndDrop(waterThrower_Image, this.university, this, 3));
+		waterThrower_card.addMouseMotionListener(new DragAndDrop(waterThrower_Image, this.university, this, 3));
 
 		// CoffeeMaker
-		coffeeMaker_card.addMouseListener(new DragAndDrop(coffeeMaker_Image, this.university, this.getGameplay(), 4));
-		coffeeMaker_card.addMouseMotionListener(new DragAndDrop(coffeeMaker_Image, this.university, this.getGameplay(), 4));
+		coffeeMaker_card.addMouseListener(new DragAndDrop(coffeeMaker_Image, this.university, this, 4));
+		coffeeMaker_card.addMouseMotionListener(new DragAndDrop(coffeeMaker_Image, this.university, this, 4));
 
 	}
 
@@ -165,6 +164,10 @@ public class Gameplay extends Background {
 		}else{
 			professor.incChargeTime();
 		}
+	}
+
+	public void startGame() {
+		this.university.startRequiredThreads();
 	}
 
 	@Override
@@ -232,7 +235,7 @@ public class Gameplay extends Background {
 		this.repaint();
 	}
 
-	public Gameplay getGameplay(){
-		return this;
-	}
+	// public Gameplay getGameplay(){
+	// 	return this;
+	// }
 }
