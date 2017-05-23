@@ -74,8 +74,8 @@ public class University implements Colorable {
 		this.isActive = true;
 
 		// Start Required Threads
-		this.randomizerThread.start();
-		this.timerThread.start();
+		// this.randomizerThread.start();
+		// this.timerThread.start();
 	}
 
 	public boolean isOccupied(int x, int y) {
@@ -88,6 +88,11 @@ public class University implements Colorable {
 		}
 
 		return false;
+	}
+
+	public void startRequiredThreads() {
+		this.randomizerThread.start();
+		this.timerThread.start();
 	}
 
 	public synchronized void hireProfessor(int x, int y, Professor professor) {
@@ -291,12 +296,12 @@ public class University implements Colorable {
 		GameElement element;
 
 		System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
-		for(int i = 0; i < this.students.size(); i++) {
-			element = this.students.get(i);
+		// for(int i = 0; i < this.students.size(); i++) {
+		// 	element = this.students.get(i);
 
-			System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
-				Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
-		}
+		// 	System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
+		// 		Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
+		// }
 		System.out.println("'---------------------------------------------------------'\n");
 	}
 }
