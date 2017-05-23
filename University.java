@@ -32,7 +32,7 @@ public class University implements Colorable {
 	private boolean isHellWeek;
 	private boolean isActive;
 
-	private final static int GAME_LENGTH = 30;
+	private final static int GAME_LENGTH = 240;
 	private final static int SCOPE = 6;
 
 	// Game Area

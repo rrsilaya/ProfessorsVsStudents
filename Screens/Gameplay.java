@@ -40,17 +40,17 @@ public class Gameplay extends Background {
 		// Back-end Integration
 		this.university = new University(1);
 
-		Tita waterThrower1 = new Tita();
-		// Tita waterThrower2 = new Tita();
-		// Tita waterThrower3 = new Tita();
-		// Tita waterThrower4 = new Tita();
-		// Tita waterThrower5 = new Tita();
+		WaterThrower waterThrower1 = new WaterThrower();
+		WaterThrower waterThrower2 = new WaterThrower();
+		WaterThrower waterThrower3 = new WaterThrower();
+		WaterThrower waterThrower4 = new WaterThrower();
+		WaterThrower waterThrower5 = new WaterThrower();
 
 		this.university.hireProfessor(0, 0, waterThrower1);
-		// this.university.hireProfessor(0, 1, waterThrower2);
-		// this.university.hireProfessor(0, 2, waterThrower3);
-		// this.university.hireProfessor(0, 3, waterThrower4);
-		// this.university.hireProfessor(0, 4, waterThrower5);
+		this.university.hireProfessor(0, 1, waterThrower2);
+		this.university.hireProfessor(0, 2, waterThrower3);
+		this.university.hireProfessor(0, 3, waterThrower4);
+		this.university.hireProfessor(0, 4, waterThrower5);
 
 		// Element Layers
 		this.lines = new ArrayList<JPanel>();
