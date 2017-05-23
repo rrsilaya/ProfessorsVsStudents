@@ -6,6 +6,8 @@ import pvs.objects.Button;
 import pvs.objects.Text;
 import pvs.objects.MainFrame;
 import pvs.objects.DragAndDrop;
+import pvs.objects.Timer;
+import pvs.objects.Kwatro;
 import pvs.University;
 import pvs.essentials.*;
 
@@ -22,8 +24,11 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+/* REVISE INTEGRATION */
 import java.awt.Container;
 import java.awt.BorderLayout;
+/* END */
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionListener;
@@ -39,7 +44,6 @@ public class Gameplay extends Background {
 	private Text money;
 	private University university;
 	private ArrayList<JPanel> lines;
-	private ArrayList<String> renderedStudents;
 
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
@@ -49,8 +53,11 @@ public class Gameplay extends Background {
 
 		// Back-end Integration
 		this.university = new University(1);
+
+		/********** REVISE INTEGRATION ***********/
 		this.container = container;
 		this.frame = frame;
+		/******* END *******/
 
 		// Element Layers
 		this.lines = new ArrayList<JPanel>();
@@ -60,9 +67,6 @@ public class Gameplay extends Background {
 			this.lines.get(i).setOpaque(false);
 			this.add(this.lines.get(i), i);
 		}
-
-		// UUID Holder
-		this.renderedStudents = new ArrayList<String>();
 
 		// Instantiate Menu Button
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
@@ -81,6 +85,8 @@ public class Gameplay extends Background {
 
 		this.money = new Text(40, 55, this.university.getFund());
 		this.add(this.money);
+		
+		this.add(this.university.getTimer());
 
 		this.repaint();
 	}
@@ -121,13 +127,9 @@ public class Gameplay extends Background {
 	}
 
 	private void renderKwatro() {
-		ArrayList<ObjectRendered> kwatro = new ArrayList<ObjectRendered>();
-		String path = "Assets/UI/Gameplay/Kwatro.png";
+		Kwatro[] kwatro = this.university.getKwatro();
 
-		for(int i = 1; i <= 5; i++) {
-			kwatro.add(new ObjectRendered(10, 100 * i, path));
-			this.renderObject(kwatro.get(i - 1));
-		}
+		for(int i = 0; i < 5; i++) this.add(kwatro[i]);
 	}
 
 	private void renderProfessors() {
@@ -176,6 +178,8 @@ public class Gameplay extends Background {
 		this.renderStash();
 		this.renderKwatro();
 		this.renderStudents();
+
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	public void mouseDragging(ObjectRendered object, int mouseX, int mouseY){

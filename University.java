@@ -11,10 +11,9 @@ import pvs.objects.Timer;
 import pvs.objects.Colorable;
 import pvs.objects.Money;
 import pvs.objects.StudentGenerator;
+import pvs.objects.Kwatro;
 
 public class University implements Colorable {
-	private ArrayList<Professor> profRoster; // List of available prof (?)
-
 	private ArrayList<Professor> professors;
 	private ArrayList<Thread> professorsThread;
 	private ArrayList<Student> students;
@@ -27,11 +26,13 @@ public class University implements Colorable {
 	private Thread randomizerThread;
 	private Timer timer;
 	private Thread timerThread;
+	private Kwatro[] kwatro;
 
 	private int level;
 	private int maxStudentCount;
 	private int fund = 0;
 	private boolean isHellWeek;
+	private boolean isActive;
 
 	private final static int GAME_LENGTH = 240;
 	private final static int SCOPE = 6;
@@ -47,8 +48,6 @@ public class University implements Colorable {
 	private final static char NONE_ID = ' ';
 
 	public University(int level) {
-		this.profRoster = new ArrayList<Professor>();
-
 		this.professors = new ArrayList<Professor>();
 		this.students = new ArrayList<Student>();
 		this.map = new char[University.MAX_ROW][University.MAX_COL];
@@ -64,11 +63,15 @@ public class University implements Colorable {
 		this.randomizerThread = new Thread(this.randomizer);
 		this.timerThread = new Thread(timer);
 
+		this.kwatro = new Kwatro[5];
+		for(int i = 0; i < 5; i++) this.kwatro[i] = new Kwatro(i);
+
 		Random rand = new Random();
 
 		this.level = level;
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
 		this.isHellWeek = false;
+		this.isActive = true;
 
 		// Start Required Threads
 		this.randomizerThread.start();
@@ -91,6 +94,7 @@ public class University implements Colorable {
 		if(/*professor.canBeHired(this.fund) && */!this.isOccupied(x, y)) {
 			professor.positionElement(x, y);
 			professor.setUIPosition((85 * (x + 1)) + (28 * x), y * 100); // variable
+			//professor.setUIPosition(85 + (x * 115), y * 100); // variable
 			professor.bindUniversity(this);
 
 			this.professors.add(professor);
@@ -158,6 +162,25 @@ public class University implements Colorable {
 				this.students.remove(i);
 	}
 
+	public void purgeStudents() {
+		ArrayList<Student> newStudents = new ArrayList<Student>();
+
+		for(int i = 0; i < this.students.size(); i++) {
+			if(this.students.get(i).getArrX() != 9) newStudents.add(this.students.get(i));
+		}
+
+		this.students = newStudents; // replace the students
+	}
+
+	public void endGame() {
+		this.isActive = false;
+	}
+
+	public void invokeKwatro(int row, Student student) {
+			this.kwatro[row].giveKwatro(student);
+			this.elementRemover();
+	}
+	
 	// Setters
 	public void addFund(int amount) {
 		this.fund += amount;
@@ -180,6 +203,10 @@ public class University implements Colorable {
 		return this.fund;
 	}
 
+	public Timer getTimer() {
+		return this.timer;
+	}
+
 	public int getTime() {
 		return this.timer.getTime();
 	}
@@ -192,6 +219,10 @@ public class University implements Colorable {
 		return this.timer.isHellWeek();
 	}
 
+	public boolean isActive() {
+		return this.isActive;
+	}
+
 	public synchronized boolean hasStudentsLeft() {
 		return this.students.size() == 0 ? false : true;
 	}
@@ -202,6 +233,10 @@ public class University implements Colorable {
 
 	public ArrayList<Student> getStudents() {
 		return this.students;
+	}
+
+	public Kwatro[] getKwatro() {
+		return this.kwatro;
 	}
 
 	// Helpers
@@ -256,13 +291,6 @@ public class University implements Colorable {
 		GameElement element;
 
 		System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
-		// for(int i = 0; i < this.professors.size(); i++) {
-		// 	element = this.professors.get(i);
-
-		// 	System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
-		// 		Colorable.YELLOW, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
-		// }
-
 		for(int i = 0; i < this.students.size(); i++) {
 			element = this.students.get(i);
 

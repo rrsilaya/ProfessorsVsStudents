@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Color;
 
 import javax.imageio.ImageIO;
 import java.io.File;
