@@ -10,19 +10,21 @@ import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.awt.FontFormatException;
-
-import java.io.File;
-import java.io.IOException;
 
 import pvs.screens.Gameplay;
 import pvs.screens.Background;
-
 import pvs.objects.Button;
 
 public class MainFrame extends JFrame {
 	private JPanel main;
+	private CardLayout cardLayout;
 	private Font customFont;
+
+	private Background mainMenu;
+	private Background credits;
+	private Background pauseMenu;
+	private Gameplay game;
+
 	public MainFrame() {
 		this.setPreferredSize(new Dimension(1000, 600));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,67 +33,98 @@ public class MainFrame extends JFrame {
 
 		Container container = this.getContentPane();
 
-
-		this.main = new JPanel(new CardLayout());
+		this.main = new JPanel();
 		container.add(this.main, BorderLayout.CENTER);
-		
-		
-		/*--MAIN MENU--*/
-		Background mainMenu = new Background("Assets/UI/MainMenu.jpg");
-		Button playGame = new Button(495, 376, "Assets/UI/Buttons/play.png");
-		mainMenu.renderObject(playGame);
-		Button credits = new Button(495, 484, "Assets/UI/Buttons/credits.png");
-		mainMenu.renderObject(credits);
 
-		Button playerButton = new Button(619, 43, "Assets/UI/Buttons/player.png");
-		mainMenu.renderObject(playerButton);
-		//this.customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/Font/indiestarbb_bld.ttf"));
-		//this.customFont= this.customFont.deriveFont(Font.PLAIN, 45f);
-		JLabel playerName = new JLabel("PLAYER NAME");
-		playerName.setBounds(632, 55, 317, 80);
-		playerName.setFont(this.customFont);
-		mainMenu.add(playerName);
+		this.main.setLayout(new CardLayout());
+		this.cardLayout = (CardLayout) this.main.getLayout();
 
-		Button newPlayerButton = new Button(619, 158, "Assets/UI/Buttons/newplayer.png");
-		mainMenu.renderObject(newPlayerButton);
-	
-		
-		
-		/*--CREDITS--*/
-		Background creditsPage = new Background("");
+		this.game = new Gameplay(this);
+		this.renderMainMenu();
+		this.renderPauseMenu();
 
-
-		/*--GAME PLAY--*/
-		Gameplay game = new Gameplay(this, container);
-
-
-		this.main.add(mainMenu, "MAIN MENU");
-		this.main.add(creditsPage, "CREDITS");
-		this.main.add(game, "GAME AREA");
-
-		
-
-		// Render Listeners
-		playGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cardLayout = (CardLayout)main.getLayout();
-				cardLayout.show(main, "GAME AREA");
-				game.startGame();
-			}
-		});
-		credits.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cardLayout = (CardLayout)main.getLayout();
-				cardLayout.show(main, "CREDITS PAGE");
-			}
-		});
+		this.main.add(this.mainMenu, "menu");
+		this.main.add(this.game, "game");
+		this.main.add(this.credits, "credits");
+		this.main.add(this.pauseMenu, "pause");
 
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 
-	public JPanel getMain(){
-		return this.main;
+	private void renderPauseMenu() {
+		this.pauseMenu = new Background("Assets/UI/Gameplay/PauseMenu.png");
+
+		Button resume = new Button(370, 300, "Assets/UI/Gameplay/BackToGame.png");
+		Button exit = new Button(370, 375, "Assets/UI/Gameplay/ExitToMenu.png");
+
+		this.pauseMenu.renderObject(resume);
+		this.pauseMenu.renderObject(exit);
+
+		// Listeners
+		resume.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("resume");
+				cardLayout.show(main, "game");
+				game.resume();
+			}
+		});
+
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "menu");
+				game.resume();
+				game.end();
+			}
+		});
+	}
+
+	private void renderMainMenu() {
+		this.mainMenu = new Background("Assets/UI/MainMenu.jpg");
+		this.credits = new Background("Assets/UI/Credits.jpg");
+
+		Button playGame = new Button(415, 320, "Assets/UI/Buttons/play.png");
+		Button creditsBtn = new Button(483, 440, "Assets/UI/Buttons/credits.png");
+		Button exitCredits = new Button(440, 500, "Assets/UI/Gameplay/ExitToMenu.png");
+			this.credits.renderObject(exitCredits);
+		Button playerButton = new Button(619, 43, "Assets/UI/Buttons/player.png");
+			JLabel playerName = new JLabel("PLAYER NAME");
+			//this.customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/Font/indiestarbb_bld.ttf"));
+			//this.customFont= this.customFont.deriveFont(Font.PLAIN, 45f);
+			playerName.setBounds(632, 55, 317, 80);
+			playerName.setFont(this.customFont);
+		Button newPlayerButton = new Button(619, 158, "Assets/UI/Buttons/newplayer.png");
+		
+		this.mainMenu.renderObject(playGame);
+		this.mainMenu.renderObject(creditsBtn);
+		this.mainMenu.renderObject(playerButton);
+		mainMenu.add(playerName);
+		this.mainMenu.renderObject(newPlayerButton);
+
+
+		// Render Listeners
+		playGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "game");
+				game.startGame();
+			}
+		});
+
+		creditsBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "credits");
+			}
+		});
+
+		exitCredits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "menu");
+			}
+		});
+	}
+
+	public void openPause() {
+		this.cardLayout.show(main, "pause");
 	}
 }
