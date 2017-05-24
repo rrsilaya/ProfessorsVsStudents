@@ -4,13 +4,14 @@ import javax.swing.JPanel;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Color;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Sprite extends JPanel {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private BufferedImage img;
 
 	public Sprite(int x, int y, String path) {

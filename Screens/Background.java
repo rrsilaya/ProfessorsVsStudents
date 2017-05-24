@@ -28,12 +28,12 @@ public class Background extends JPanel {
 		} catch(Exception e) {}
 	}
 
-	protected void renderObject(ObjectRendered object) {
+	public void renderObject(ObjectRendered object) {
 		object.setLocation(object.getX(), object.getY());
 		this.add(object);
 	}
 
-	protected void renderObject(Button btn) {
+	public void renderObject(Button btn) {
 		btn.setLocation(btn.getX(), btn.getY());
 		this.add(btn);
 	}
