@@ -31,7 +31,7 @@ public class University implements Colorable {
 	private int level;
 	private int maxStudentCount;
 	private int fund = 0;
-	private boolean isHellWeek;
+	private boolean isPaused;
 	private boolean isActive;
 
 	private final static int GAME_LENGTH = 240;
@@ -70,7 +70,7 @@ public class University implements Colorable {
 
 		this.level = level;
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
-		this.isHellWeek = false;
+		this.isPaused = false;
 		this.isActive = true;
 
 		// Start Required Threads
@@ -195,8 +195,8 @@ public class University implements Colorable {
 		this.fund -= amount;
 	}
 
-	void toggleHellWeek() {
-		this.isHellWeek = !this.isHellWeek;
+	public void pause() {
+		this.isPaused = !this.isPaused;
 	}
 
 	// Getters
@@ -218,6 +218,10 @@ public class University implements Colorable {
 
 	public boolean isTimerActive() {
 		return this.timer.isActive();
+	}
+
+	public boolean isPaused() {
+		return this.isPaused;
 	}
 
 	public boolean isHellWeek() {
