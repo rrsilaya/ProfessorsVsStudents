@@ -23,7 +23,7 @@ public class Text extends JLabel {
 	}
 
 	public Text(int x, int y, int content) {
-		super(new Integer(content).toString(), SwingConstants.CENTER);
+		super(new Integer(500).toString(), SwingConstants.CENTER);
 		this.setSize(85, 25);
 
 		this.x = x;
