@@ -44,6 +44,8 @@ public class Gameplay extends Background {
 	private Text money;
 	private University university;
 	private ArrayList<JPanel> lines;
+	private ArrayList<String> renderedStudents;
+
 
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
@@ -53,6 +55,7 @@ public class Gameplay extends Background {
 
 		// Back-end Integration
 		this.university = new University(1);
+
 
 		/********** REVISE INTEGRATION ***********/
 		// this.container = container;
@@ -67,6 +70,18 @@ public class Gameplay extends Background {
 			this.lines.get(i).setOpaque(false);
 			this.add(this.lines.get(i), i);
 		}
+
+		// Element Layers
+		this.lines = new ArrayList<JPanel>();
+		for(int i = 0; i < 5; i++) {
+			this.lines.add(new JPanel());
+			this.lines.get(i).setSize(1000, 600);
+			this.lines.get(i).setOpaque(false);
+			this.add(this.lines.get(i), i);
+		}
+
+		// UUID Holder
+		this.renderedStudents = new ArrayList<String>();
 
 		// Instantiate Menu Button
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
@@ -138,11 +153,13 @@ public class Gameplay extends Background {
 
 		for(int i = 0; i < professors.size(); i++) {
 			JPanel pane = this.lines.get(this.lines.size() - 1 - professors.get(i).getArrY());
+
 			pane.add(professors.get(i));
 
 			if (professors.get(i).getType().equals("Tita")){
 				this.renderMoney(professors.get(i));
 			}
+      
 		}
 	}
 
@@ -165,6 +182,7 @@ public class Gameplay extends Background {
 
 		}else{
 			professor.incChargeTime();
+
 		}
 	}
 
@@ -191,6 +209,7 @@ public class Gameplay extends Background {
 		object.repaint();
 		this.add(object);
 		this.repaint();
+
 	}
 
 	public void mouseDropping(ObjectRendered object, int mouseX, int mouseY, int value){
