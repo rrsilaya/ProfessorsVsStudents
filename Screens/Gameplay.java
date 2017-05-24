@@ -153,7 +153,7 @@ public class Gameplay extends Background {
 	}
 
 	private void renderMoney(Professor professor){
-		if(professor.getChargeTime() == professor.getAtkSpeed() * 8){
+		if(professor.getChargeTime() == professor.getAtkSpeed() * 10){
 			this.university.addFund(professor.getSalary());
 			professor.resetChargeTime();
 
