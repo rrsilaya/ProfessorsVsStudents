@@ -112,7 +112,7 @@ public class University implements Colorable {
 
 	public synchronized void positionStudent(int y, Student student) {
 		student.positionElement(University.MAX_COL - 1, y);
-		student.setUIPosition(700, y * 100);
+		student.setUIPosition(1100, y * 100);
 		student.bindUniversity(this);
 
 		this.students.add(student);
