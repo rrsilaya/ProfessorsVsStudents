@@ -79,6 +79,8 @@ public class Gameplay extends Background {
 				// frame.pack();
 				// frame.setLocationRelativeTo(null);
 				// frame.setVisible(true);
+				frame.backToMenu();
+				university.endGame();
 			}
 		});
 		this.renderObject(menu_btn);
