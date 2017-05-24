@@ -56,7 +56,7 @@ public class Timer extends JPanel implements Runnable {
 		} catch(Exception e) {}
 
 		while(this.time != 0 && this.university.isActive()) {
-			// this.university.log();
+			this.university.log();
 			this.time -= this.interval;
 
 			this.repaint();
