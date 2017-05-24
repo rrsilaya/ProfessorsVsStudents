@@ -22,12 +22,12 @@ public abstract class Student extends GameElement implements Runnable {
 	public void run() {
 		Professor toAttack;
 
-		while(this.hitPoints != 0 && this.x != -50 && this.university.isActive()) {
+		while(this.hitPoints != 0 && this.x != -75 && this.university.isActive()) {
 			this.move();
 
 			if(this.x / 115 < this.arrX) { // movement in array
 				this.arrX--;
-				this.university.log();
+				// this.university.log();
 			}
 
 			this.repaint();
@@ -36,7 +36,7 @@ public abstract class Student extends GameElement implements Runnable {
 			while(toAttack != null) {
 				this.attack(toAttack);
 				this.university.elementRemover();
-				this.university.log();
+				// this.university.log();
 
 				try {
 					Thread.sleep(150 * this.atkSpeed);
@@ -45,7 +45,7 @@ public abstract class Student extends GameElement implements Runnable {
 				if(toAttack.getHP() == 0) toAttack = null;
 			}
 
-			if(this.x == 0) this.university.invokeKwatro(this.arrY, this);
+			if(this.x == 10) this.university.invokeKwatro(this.arrY, this);
 
 			try {
 				Thread.sleep(80);
