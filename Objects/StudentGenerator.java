@@ -70,7 +70,7 @@ public class StudentGenerator implements Runnable, LevelData {
 			Thread.sleep(StudentGenerator.REST_TIME);
 		} catch(Exception e) {}
 
-			this.university.log();
+			// this.university.log();
 
 		int studentToEnter = 0;
 		while(this.university.isTimerActive()) {
@@ -84,7 +84,7 @@ public class StudentGenerator implements Runnable, LevelData {
 				Thread.sleep((rand.nextInt(4) * (2000 / this.university.getLevel())) + (this.university.isHellWeek() ? 4000 : 12000));
 			} catch(Exception e) {}
 			System.out.println(studentToEnter);
-			this.university.log();
+			// this.Universityy.log();
 		}
 	}
 }

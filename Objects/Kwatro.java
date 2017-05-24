@@ -17,7 +17,7 @@ public class Kwatro extends Sprite {
 
 	public void giveKwatro(Student student) {
 		if(!this.isUsed) {
-			//student.resetHP(); // invoke attack to student
+			student.resetHP(); // invoke attack to student
 			this.isUsed = true;
 
 			this.setX(-100);
