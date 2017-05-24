@@ -83,7 +83,6 @@ public class StudentGenerator implements Runnable, LevelData {
 			try {
 				Thread.sleep((rand.nextInt(4) * (2000 / this.university.getLevel())) + (this.university.isHellWeek() ? 4000 : 12000));
 			} catch(Exception e) {}
-			System.out.println(studentToEnter);
 			// this.Universityy.log();
 		}
 	}
