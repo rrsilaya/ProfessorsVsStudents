@@ -71,6 +71,13 @@ public abstract class Professor extends GameElement implements Runnable {
 					Thread.sleep(100 * this.atkSpeed);
 				} catch(Exception e) {}
 			}
+
+			while(this.university.isPaused()) {
+				try {
+					Thread.sleep(1000);
+				} catch (Exception e) {}
+			}
+			
 			if(!this.university.hasStudentsLeft()) break; // finishes the game
 			toAttack = this.university.frontStudent(this.arrX, this.arrY);
 		}

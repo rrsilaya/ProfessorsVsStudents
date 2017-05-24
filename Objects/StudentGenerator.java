@@ -14,7 +14,7 @@ public class StudentGenerator implements Runnable, LevelData {
 	private ArrayList<Student> levelStudents;
 	private ArrayList<Integer> renderedStudents;
 
-	private final static int REST_TIME = 2000;
+	private final static int REST_TIME = 5000;
 
 	public StudentGenerator(int gameLength, int maxStudents, University university) {
 		Random rand = new Random();
@@ -70,8 +70,6 @@ public class StudentGenerator implements Runnable, LevelData {
 			Thread.sleep(StudentGenerator.REST_TIME);
 		} catch(Exception e) {}
 
-			// this.university.log();
-
 		int studentToEnter = 0;
 		while(this.university.isTimerActive()) {
 			while(this.isRendered(studentToEnter)) studentToEnter = rand.nextInt(this.levelStudents.size());
@@ -79,11 +77,16 @@ public class StudentGenerator implements Runnable, LevelData {
 
 			this.university.studentEnter(studentToEnter);
 
+			while(this.university.isPaused()) {
+				try {
+					Thread.sleep(1000);
+				} catch (Exception e) {}
+			}
+
 			// Pause
 			try {
 				Thread.sleep((rand.nextInt(4) * (2000 / this.university.getLevel())) + (this.university.isHellWeek() ? 4000 : 12000));
 			} catch(Exception e) {}
-			// this.Universityy.log();
 		}
 	}
 }
