@@ -38,6 +38,8 @@ public abstract class Student extends GameElement implements Runnable {
 				this.university.elementRemover();
 				// this.university.log();
 
+				toAttack.indicateAttacked();
+
 				try {
 					Thread.sleep(150 * this.atkSpeed);
 				} catch(Exception e) {}
