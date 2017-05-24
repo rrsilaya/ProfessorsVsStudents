@@ -169,6 +169,7 @@ public class Gameplay extends Background {
 		g2d.drawImage(this.background, 0, 0, null);
 
 		this.renderProfessors();
+		this.renderStash();
 		this.renderKwatro();
 		this.renderStudents();
 
