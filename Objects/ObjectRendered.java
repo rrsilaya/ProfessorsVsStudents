@@ -5,13 +5,12 @@ import java.io.File;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
 public class ObjectRendered extends JPanel {
 	private int x, y;
-	protected BufferedImage img;
+	private BufferedImage img;
 
 	public ObjectRendered(int x, int y, String path) {
 		this.x = x - 1;
@@ -39,11 +38,6 @@ public class ObjectRendered extends JPanel {
 
 	public int getY() {
 		return this.y;
-	}
-
-	public void setCoordinates(int x, int y) {
-		this.x = x - 1;
-		this.y = y - 1;
 	}
 
 	@Override

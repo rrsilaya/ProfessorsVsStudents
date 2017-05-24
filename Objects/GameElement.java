@@ -2,6 +2,7 @@ package pvs.essentials;
 
 import pvs.University;
 import pvs.objects.Sprite;
+import java.util.UUID;
 
 public abstract class GameElement extends Sprite {
 	protected int hitPoints;
@@ -45,8 +46,8 @@ public abstract class GameElement extends Sprite {
 	}
 
 	public void removeFromScreen() {
-		this.setX(-100);
-		this.setY(-100);
+		this.setX(-1000);
+		this.setY(-1000);
 	}
 
 	public void bindUniversity(University university) {
@@ -60,10 +61,6 @@ public abstract class GameElement extends Sprite {
 
 	public int getDP() {
 		return this.dmgPoints;
-	}
-
-	public int getAtkSpeed(){
-		return this.atkSpeed;
 	}
 
 	public String getType() {

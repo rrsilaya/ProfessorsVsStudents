@@ -3,9 +3,8 @@ import pvs.University;
 
 public abstract class Professor extends GameElement implements Runnable {
 	protected int salary;
-	protected int state = 0;
+	protected int state;
 	protected int cooldown;
-	protected int chargeTime = 0;
 	protected boolean isAttacking;
 
 	public Professor(int hitPoints, int dmgPoints, int atkSpeed, String type, String graphics,
@@ -21,29 +20,9 @@ public abstract class Professor extends GameElement implements Runnable {
 		this.state = 0;
 	}
 
-	public void incState(){
-		this.state++;
-	}
-
-	public void resetChargeTime() {
-		this.chargeTime = 0;
-	}
-
-	public void incChargeTime(){
-		this.chargeTime++;
-	}
-
 	// Getters
 	public int getSalary() {
 		return this.salary;
-	}
-
-	public int getState() {
-		return this.state;
-	}
-
-	public int getChargeTime() {
-		return this.chargeTime;
 	}
 
 	public boolean canBeHired() {
@@ -59,29 +38,23 @@ public abstract class Professor extends GameElement implements Runnable {
 	public void run() {
 		Student toAttack = this.university.frontStudent(this.arrX, this.arrY);
 
-		while(this.hitPoints != 0 && this.university.isActive()) {
+		while(this.hitPoints != 0) {
 			if(toAttack != null) {
 				this.attack(toAttack);
 				this.university.elementRemover();
 				this.university.log();
 
-				// toAttack.setOpacity(0.5f);
-				// try {
-				// 	Thread.sleep(300);
-				// } catch (Exception e) {}
-				// toAttack.setOpactiy(1.0f);
+				if(!this.university.hasStudentsLeft()) break; // finishes the game
 
 				try {
 					Thread.sleep(100 * this.atkSpeed);
 				} catch(Exception e) {}
 			}
-			if(!this.university.hasStudentsLeft()) break; // finishes the game
+
 			toAttack = this.university.frontStudent(this.arrX, this.arrY);
 		}
 
-		if(this.hitPoints == 0) {
-			this.removeFromScreen();
-			this.repaint();
-		}
+		this.removeFromScreen();
+		this.repaint();
 	}
 }
