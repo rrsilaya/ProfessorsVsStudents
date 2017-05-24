@@ -86,8 +86,6 @@ public class Gameplay extends Background {
 		this.add(this.university.getTimer());
 		this.money = new Text(40, 55, this.university.getFund());
 		this.add(this.money);
-
-		this.renderStash();
 		
 		// this.repaint();
 	}
@@ -180,6 +178,7 @@ public class Gameplay extends Background {
 		g2d.drawImage(this.background, 0, 0, null);
 
 		this.renderProfessors();
+		this.renderStash();
 		this.renderKwatro();
 		this.renderStudents();
 
