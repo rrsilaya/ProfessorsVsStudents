@@ -24,10 +24,6 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-/* REVISE INTEGRATION */
-import java.awt.Container;
-import java.awt.BorderLayout;
-/* END */
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,11 +35,12 @@ import java.io.File;
 
 public class Gameplay extends Background {
 	private BufferedImage background;
-	private Container container;
 	private MainFrame frame;
 	private Text money;
 	private University university;
 	private ArrayList<JPanel> lines;
+
+	private Background pauseMenu;
 
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
@@ -54,10 +51,7 @@ public class Gameplay extends Background {
 		// Back-end Integration
 		this.university = new University(1);
 
-		/********** REVISE INTEGRATION ***********/
-		// this.container = container;
 		this.frame = frame;
-		/******* END *******/
 
 		// Element Layers
 		this.lines = new ArrayList<JPanel>();
@@ -72,15 +66,8 @@ public class Gameplay extends Background {
 		Button menu_btn = new Button(850, 15, "Assets/UI/Gameplay/Menu.png");
 		menu_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// container.removeAll();
-				// MainMenu menu = new MainMenu(container, frame);
-				// container.add(menu, BorderLayout.CENTER);
-				// university.endGame();
-				// frame.pack();
-				// frame.setLocationRelativeTo(null);
-				// frame.setVisible(true);
-				frame.backToMenu();
-				university.endGame();
+				frame.openPause();
+				university.togglePause();
 			}
 		});
 		this.renderObject(menu_btn);
@@ -157,7 +144,7 @@ public class Gameplay extends Background {
 	}
 
 	private void renderMoney(Professor professor){
-		if(professor.getChargeTime() == professor.getAtkSpeed() * 8){
+		if(professor.getChargeTime() == professor.getAtkSpeed() * 10){
 			this.university.addFund(professor.getSalary());
 			professor.resetChargeTime();
 
@@ -238,7 +225,11 @@ public class Gameplay extends Background {
 		this.repaint();
 	}
 
-	// public Gameplay getGameplay(){
-	// 	return this;
-	// }
+	public void resume() {
+		this.university.togglePause();
+	}
+
+	public void end() {
+		this.university.endGame();
+	}
 }

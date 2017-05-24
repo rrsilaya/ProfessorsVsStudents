@@ -44,8 +44,10 @@ public class Timer extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
-		g2d.drawImage(this.bg, 735, 565, null);
-		g2d.drawImage(this.timeProgress, ((int) Math.ceil(((float)this.time / this.total) * 185) + 735), 568, null);
+		if(this.time != this.total) {
+			g2d.drawImage(this.bg, 735, 565, null);
+			g2d.drawImage(this.timeProgress, ((int) Math.ceil(((float)this.time / this.total) * 185) + 735), 568, null);
+		}
 	}
 
 	// Threading
@@ -64,6 +66,13 @@ public class Timer extends JPanel implements Runnable {
 			try {
 				Thread.sleep(1000);
 			} catch(Exception e) {}
+
+			// On Pause
+			while(this.university.isPaused()) {
+				try {
+					Thread.sleep(1000);
+				} catch(Exception e) {}
+			}
 		}
 
 		this.isActive = false;

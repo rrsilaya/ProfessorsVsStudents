@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
 
 	private Background mainMenu;
 	private Background credits;
+	private Background pauseMenu;
 	private Gameplay game;
 
 	public MainFrame() {
@@ -37,14 +38,43 @@ public class MainFrame extends JFrame {
 
 		this.game = new Gameplay(this);
 		this.renderMainMenu();
+		this.renderPauseMenu();
 
 		this.main.add(this.mainMenu, "menu");
-		this.main.add(game, "game");
+		this.main.add(this.game, "game");
 		this.main.add(this.credits, "credits");
+		this.main.add(this.pauseMenu, "pause");
 
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+	}
+
+	private void renderPauseMenu() {
+		this.pauseMenu = new Background("Assets/UI/Gameplay/PauseMenu.png");
+
+		Button resume = new Button(370, 300, "Assets/UI/Gameplay/BackToGame.png");
+		Button exit = new Button(370, 375, "Assets/UI/Gameplay/ExitToMenu.png");
+
+		this.pauseMenu.renderObject(resume);
+		this.pauseMenu.renderObject(exit);
+
+		// Listeners
+		resume.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("resume");
+				cardLayout.show(main, "game");
+				game.resume();
+			}
+		});
+
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "menu");
+				game.resume();
+				game.end();
+			}
+		});
 	}
 
 	private void renderMainMenu() {
@@ -80,7 +110,7 @@ public class MainFrame extends JFrame {
 		});
 	}
 
-	public void backToMenu() {
-		this.cardLayout.show(main, "menu");
+	public void openPause() {
+		this.cardLayout.show(main, "pause");
 	}
 }

@@ -27,7 +27,12 @@ public abstract class Student extends GameElement implements Runnable {
 
 			if(this.x / 115 < this.arrX) { // movement in array
 				this.arrX--;
-				// this.university.log();
+			}
+
+			while(this.university.isPaused()) {
+				try {
+					Thread.sleep(1000);
+				} catch (Exception e) {}
 			}
 
 			this.repaint();
@@ -36,13 +41,18 @@ public abstract class Student extends GameElement implements Runnable {
 			while(toAttack != null) {
 				this.attack(toAttack);
 				this.university.elementRemover();
-				// this.university.log();
 
 				toAttack.indicateAttacked();
 
 				try {
 					Thread.sleep(150 * this.atkSpeed);
 				} catch(Exception e) {}
+
+				while(this.university.isPaused()) {
+					try {
+						Thread.sleep(1000);
+					} catch (Exception e) {}
+				}
 
 				if(toAttack.getHP() == 0) toAttack = null;
 			}

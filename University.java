@@ -35,7 +35,7 @@ public class University implements Colorable {
 	private boolean isActive;
 
 	private final static int GAME_LENGTH = 240;
-	private final static int SCOPE = 6;
+	private final static int SCOPE = 5;
 
 	// Game Area
 	private final static int MAX_ROW = 5;
@@ -194,7 +194,7 @@ public class University implements Colorable {
 		this.fund -= amount;
 	}
 
-	public void pause() {
+	public void togglePause() {
 		this.isPaused = !this.isPaused;
 	}
 
