@@ -31,7 +31,7 @@ public class University implements Colorable {
 	private int level;
 	private int maxStudentCount;
 	private int fund = 0;
-	private boolean isHellWeek;
+	private boolean isPaused;
 	private boolean isActive;
 
 	private final static int GAME_LENGTH = 240;
@@ -70,7 +70,7 @@ public class University implements Colorable {
 
 		this.level = level;
 		this.maxStudentCount = (rand.nextInt(5) * this.level) + 20;
-		this.isHellWeek = false;
+		this.isPaused = false;
 		this.isActive = true;
 
 		// Start Required Threads
@@ -112,7 +112,7 @@ public class University implements Colorable {
 
 	public synchronized void positionStudent(int y, Student student) {
 		student.positionElement(University.MAX_COL - 1, y);
-		student.setUIPosition(1100, y * 100);
+		student.setUIPosition(700, y * 100);
 		student.bindUniversity(this);
 
 		this.students.add(student);
@@ -195,8 +195,8 @@ public class University implements Colorable {
 		this.fund -= amount;
 	}
 
-	void toggleHellWeek() {
-		this.isHellWeek = !this.isHellWeek;
+	public void pause() {
+		this.isPaused = !this.isPaused;
 	}
 
 	// Getters
@@ -218,6 +218,10 @@ public class University implements Colorable {
 
 	public boolean isTimerActive() {
 		return this.timer.isActive();
+	}
+
+	public boolean isPaused() {
+		return this.isPaused;
 	}
 
 	public boolean isHellWeek() {
@@ -272,36 +276,43 @@ public class University implements Colorable {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 
-		this.visualize();
+		// this.visualize();
 
-		// Grid
-		for(int row = 0; row < University.MAX_ROW; row++) {
-			// Top
-			for(int col = 0; col < University.MAX_COL; col++) {
-				System.out.print(",---, ");
-			} System.out.println();
+		// // Grid
+		// for(int row = 0; row < University.MAX_ROW; row++) {
+		// 	// Top
+		// 	for(int col = 0; col < University.MAX_COL; col++) {
+		// 		System.out.print(",---, ");
+		// 	} System.out.println();
 
-			// Mid
-			for(int col = 0; col < University.MAX_COL; col++) {
-				System.out.printf("| %c | ", this.map[row][col]);
-			} System.out.println();
+		// 	// Mid
+		// 	for(int col = 0; col < University.MAX_COL; col++) {
+		// 		System.out.printf("| %c | ", this.map[row][col]);
+		// 	} System.out.println();
 
-			for(int col = 0; col < University.MAX_COL; col++) {
-				System.out.print("'---' ");
-			} System.out.println();
-		}
+		// 	for(int col = 0; col < University.MAX_COL; col++) {
+		// 		System.out.print("'---' ");
+		// 	} System.out.println();
+		// }
 
 		// Logs
 		System.out.println(".---------------------------------------------------------.");
 		GameElement element;
 
-		System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
-		// for(int i = 0; i < this.students.size(); i++) {
-		// 	element = this.students.get(i);
+		// System.out.printf("|                        TIME: %3d                        |\n", this.timer.getTime());
+		for(int i = 0; i < this.professors.size(); i++) {
+			element = this.professors.get(i);
 
-		// 	System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
-		// 		Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
-		// }
+			System.out.printf("|    %sPRF %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
+				Colorable.RED, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
+		}
+
+		for(int i = 0; i < this.students.size(); i++) {
+			element = this.students.get(i);
+
+			System.out.printf("|    %sSTD %14s [%2d,%d]%s   HP: %3d  /  DP: %3d      |\n",
+				Colorable.CYAN, element.getType(), element.getArrX(), element.getArrY(), Colorable.RESET, element.getHP(), element.getDP());
+		}
 		System.out.println("'---------------------------------------------------------'\n");
 	}
 }
