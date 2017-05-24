@@ -2,24 +2,38 @@ package pvs.objects;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import java.awt.Dimension;
 import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 import pvs.screens.Gameplay;
 import pvs.screens.Background;
 import pvs.objects.Button;
 
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class MainFrame extends JFrame {
 	private JPanel main;
 	private CardLayout cardLayout;
+	private Font customFont;
+	private String userName;
 
 	private Background mainMenu;
 	private Background credits;
 	private Background pauseMenu;
+	private Background userMenu;
 	private Gameplay game;
 
 	public MainFrame() {
@@ -36,14 +50,20 @@ public class MainFrame extends JFrame {
 		this.main.setLayout(new CardLayout());
 		this.cardLayout = (CardLayout) this.main.getLayout();
 
-		this.game = new Gameplay(this);
+		this.game = new Gameplay(this, "PLAYER");
+		this.userName = this.game.getPlayerName();
+		this.saveGame();
+		this.loadGame();
+
 		this.renderMainMenu();
 		this.renderPauseMenu();
+		this.renderUserMenu(this);
 
 		this.main.add(this.mainMenu, "menu");
 		this.main.add(this.game, "game");
 		this.main.add(this.credits, "credits");
 		this.main.add(this.pauseMenu, "pause");
+		this.main.add(this.userMenu, "user");
 
 		this.pack();
 		this.setLocationRelativeTo(null);
@@ -54,23 +74,24 @@ public class MainFrame extends JFrame {
 		this.pauseMenu = new Background("Assets/UI/Gameplay/PauseMenu.png");
 
 		Button resume = new Button(370, 300, "Assets/UI/Gameplay/BackToGame.png");
-		Button exit = new Button(370, 375, "Assets/UI/Gameplay/ExitToMenu.png");
+		Button exitPauseMenu = new Button(370, 375, "Assets/UI/Gameplay/ExitToMenu.png");
 
 		this.pauseMenu.renderObject(resume);
-		this.pauseMenu.renderObject(exit);
+		this.pauseMenu.renderObject(exitPauseMenu);
 
 		// Listeners
 		resume.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("resume");
+				//System.out.println("resume");
 				cardLayout.show(main, "game");
 				game.resume();
 			}
 		});
 
-		exit.addActionListener(new ActionListener() {
+		exitPauseMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(main, "menu");
+				saveGame();
 				game.resume();
 				game.end();
 			}
@@ -78,22 +99,39 @@ public class MainFrame extends JFrame {
 	}
 
 	private void renderMainMenu() {
+		loadGame();
+		userName = game.getPlayerName();
 		this.mainMenu = new Background("Assets/UI/MainMenu.jpg");
 		this.credits = new Background("Assets/UI/Credits.jpg");
 
-		Button playGame = new Button(580, 70, "Assets/UI/Buttons/play.png");
-		Button creditsBtn = new Button(580, 200, "Assets/UI/Buttons/credits.png");
+		Button playGame = new Button(415, 320, "Assets/UI/Buttons/play.png");
+		Button creditsBtn = new Button(483, 440, "Assets/UI/Buttons/credits.png");
 		Button exitCredits = new Button(440, 500, "Assets/UI/Gameplay/ExitToMenu.png");
-
+			this.credits.renderObject(exitCredits);
+		Button playerButton = new Button(619, 43, "Assets/UI/Buttons/player.png");
+			JLabel playerName = new JLabel(this.userName);
+			//this.customFont = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/Font/indiestarbb_bld.ttf"));
+			//this.customFont= this.customFont.deriveFont(Font.PLAIN, 45f);
+			playerName.setBounds(619, 43, 341, 101);
+			//playerName.setFont(this.customFont);
+			playerName.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			playerName.setHorizontalAlignment(SwingConstants.CENTER);
+			playerButton.add(playerName);
+		Button newPlayerButton = new Button(619, 158, "Assets/UI/Buttons/newplayer.png");
+		
 		this.mainMenu.renderObject(playGame);
 		this.mainMenu.renderObject(creditsBtn);
-		this.credits.renderObject(exitCredits);
+		this.mainMenu.renderObject(playerButton);
+		this.mainMenu.renderObject(newPlayerButton);
+
 
 		// Render Listeners
 		playGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(main, "game");
+				loadGame();
 				game.startGame();
+				saveGame();
 			}
 		});
 
@@ -108,9 +146,67 @@ public class MainFrame extends JFrame {
 				cardLayout.show(main, "menu");
 			}
 		});
+
+		newPlayerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "user");
+			}
+		});
 	}
 
+	private void renderUserMenu(MainFrame frame) {
+		this.userMenu = new Background("Assets/UI/Gameplay/PauseMenu.png");
+
+		JTextField playerText = new JTextField();
+				playerText.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				playerText.setHorizontalAlignment(SwingConstants.CENTER);
+				playerText.setBounds(367, 195, 266, 66);
+				playerText.setColumns(1);
+		Button enterText = new Button(367, 298, "Assets/UI/Gameplay/EnterText.png");
+		Button exitUserMenu = new Button(367, 365, "Assets/UI/Gameplay/ExitToMenu.png");
+
+		userMenu.add(playerText);
+		this.userMenu.renderObject(enterText);
+		this.userMenu.renderObject(exitUserMenu);
+
+		enterText.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.userName = playerText.getText();
+				frame.game = new Gameplay(frame, userName);
+				saveGame();
+				loadGame();
+			}
+		});
+
+		exitUserMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(main, "menu");
+				//renderMainMenu();
+				loadGame();
+				game.resume();
+				game.end();
+			}
+		});
+	}
 	public void openPause() {
 		this.cardLayout.show(main, "pause");
+	}
+
+	public void saveGame() {
+		try{
+			ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(this.game.getPlayerName() + ".txt"));
+			save.writeObject(this.game);
+			save.close();
+		}catch(Exception e) {}
+	}
+
+	public void loadGame() {
+		try{
+			ObjectInputStream load = new ObjectInputStream(new FileInputStream(this.game.getPlayerName() + ".txt"));
+			this.game = (Gameplay)load.readObject();
+			load.close();
+		}catch(FileNotFoundException e) {
+			System.out.println("ERROR: No previously saved game.");
+		}catch(Exception e) {}
 	}
 }
