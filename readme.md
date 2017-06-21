@@ -1,81 +1,85 @@
-<div style="text-align: center;">
-	<img src="Assets/Drop-Cap-Games-Logo.png" height="250px" alt="Drop Cap Games Logo"/>
-</div>
+<h1 align="center">
+  <img src="Assets/Students/Freshie.png" alt="logo" />
+  <br>
+  Professors vs. Students
+  <br>
+</h1>
+<h4 align="center">A game adaptation of PopCap Game's [Plants vs. Zombies](http://www.popcap.com.ph/plants-vs-zombies-1) written in Java</h4>
 
-# Drop Cap Games
-Drop Cap Games is a collective developer team name for CMSC 22 project.
-
-### Cloning and Development
+### Installation
 * Clone the repository using `git clone https://github.com/rrsilaya/Drop-Cap-Games.git`.
-* **ALWAYS** do `git pull origin backend` first before anything else.
-* **NEVER** push to the `master` branch without consensus to the team.
-* `git branch backend` to your development branch.
-* Instead of running/compiling the codes manually, use the `makefile` included in the project.
-	* `make` to compile the files
-	* `make run` to run the `Main` class
-	* `make clean` to delete compiled classes (retaining the source codes)
-	* `make build` to compile and run at the same time
-* Always check the ***Projects*** tab to know what tasks are left to do, in progress, and done.
+* Create the build using any of the following options:
+  * Manual Installation (Linux)
+    * **`make compile`:** compile from source
+    * **`make run`:** run the compiled build
+    * **`make build`:** combined compile + run
+  * Automated Installation (Windows)
+    * Run the `build.bat` file to build from source and run it
 
 ### Package Directory
 ```
-pvs
-|---- University.class
-|
-|---- essentials/
-|-------- GameElement.class
-|-------- Professor.class
-|-------- Student.class
-|
-|---- objects/
-|-------- Money.class
+.
+├── Assets                                          # GUI assets
+│   ├── Drop-Cap-Games-Logo.png
+│   ├── Font
+│   │   ├── indiestarbb_bld.ttf
+│   │   └── indiestarbb_reg.ttf
+│   ├── Objects                                     # Miscellaneous Object Graphics
+│   │   ├── Coffee.png
+│   │   ├── Money.png
+│   │   ├── Sound.png
+│   │   └── Water.png
+│   ├── Professors
+│   │   ├── <Professor>.png                         # Original Professor Graphics
+│   │   └── <Professor>_hurt.png                    # Overlayed Professor Graphics
+│   ├── Students
+│   │   ├── <Student>.png
+│   │   └── <Student>_hurt.png
+│   └── UI
+│       ├── Buttons
+│       │   ├── credits.png
+│       │   └── play.png
+│       ├── Credits.jpg
+│       ├── Gameplay
+│       │   ├── Background.jpg
+│       │   ├── BackToGame.png
+│       │   ├── Bar.png
+│       │   ├── Cards
+│       │   │   ├── <ProfessorCard>.png
+│       │   │   └── <ProfessorCard>_disabled.png
+│       │   ├── ExitToMenu.png
+│       │   ├── Kwatro.png
+│       │   ├── Loader.png
+│       │   ├── Menu.png
+│       │   ├── PauseMenu.png
+│       │   ├── TimeBar.png
+│       │   └── TimeID.png
+│       ├── Lose.png
+│       ├── MainMenu.jpg
+│       └── Win.png
+├── build.bat
+├── Demo.java
+├── makefile
+├── Objects
+│   ├── Button.java
+│   ├── Colorable.java
+│   ├── DragAndDrop.java
+│   ├── GameElement.java
+│   ├── Kwatro.java
+│   ├── MainFrame.java
+│   ├── Money.java
+│   ├── ObjectRendered.java
+│   ├── Sprite.java
+│   ├── StudentGenerator.java
+│   ├── Text.java
+│   └── Timer.java
+├── Professors
+│   └── <Professor>.java
+├── readme.md
+├── Screens
+│   ├── Background.java
+│   └── Gameplay.java
+├── Students
+│   └── <Student>.java
+└── University.java
 ```
-
-### Coding Rules and Guidelines
-> These coding rules should be HIGHLY implemented for ease of collaboration and code readability.
-1. **NEVER** use soft tabs (spaces as tabs) in your codes. Use *hard tabs*.
-2. **DO NOT** push to the repository with *.class* files. Do `rm *.class` first
-	before adding to the repository.
-3. Declare import statements by group depending on its class. Do this also in your codes.
-```java
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTabbedPane;
-
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import java.awt.Color;
-
-import java.util.Scanner;
-import java.util.Arrays;
-```
-4. Use proper spaces in your code.
-**Wrong:**
-```java
-for(i=0;i<5;i++){
-  System.out.println("Hello world!");
-}
-```
-**Correct:**
-```java
-for(i = 0; i < 5; i++) {
-  System.out.println("Hello world!");
-}
-```
-5. Observe proper indention.
-```java
-int i = 1,
-    a = 2,
-    c = 3;
-```
-6. Group the variable declarations by *native types* and *class types*.
-```java
-int i;
-String j;
-float k;
-
-Student b;
-Professor a;
-```
-
-> Happy coding!
