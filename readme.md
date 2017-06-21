@@ -4,7 +4,7 @@
   Professors vs. Students
   <br>
 </h1>
-<h4 align="center">A game adaptation of PopCap Game's [Plants vs. Zombies](http://www.popcap.com.ph/plants-vs-zombies-1) written in Java</h4>
+<h4 align="center">A game adaptation of PopCap Game's <a href="http://www.popcap.com.ph/plants-vs-zombies-1">Plants vs. Zombies</a> written in Java</h4>
 
 ### Installation
 * Clone the repository using `git clone https://github.com/rrsilaya/Drop-Cap-Games.git`.
