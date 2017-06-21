@@ -16,7 +16,7 @@
   * Automated Installation (Windows)
     * Run the `build.bat` file to build from source and run it
 
-### Package Directory
+### Project Directory
 ```
 .
 ├── Assets                                          # GUI assets
@@ -82,4 +82,56 @@
 ├── Students
 │   └── <Student>.java
 └── University.java
+```
+
+### Game Characters
+#### Professors
+* Tita
+* Talker
+* WaterThrower
+* CoffeeMaker
+
+#### Students
+* Freshie
+* Sabaw
+* Graduating
+
+### Package Structure
+All essential files for the game are stored in the `pvs` package.
+```
+pvs
+├── essentials
+│   ├── CoffeeMaker.class
+│   ├── Freshie.class
+│   ├── GameElement.class
+│   ├── Graduating.class
+│   ├── Professor.class
+│   ├── Sabaw.class
+│   ├── Student.class
+│   ├── Talker.class
+│   ├── Tita.class
+│   └── WaterThrower.class
+├── objects
+│   ├── Button.class
+│   ├── Colorable.class
+│   ├── DragAndDrop.class
+│   ├── Kwatro.class
+│   ├── LevelData.class
+│   ├── MainFrame$1.class
+│   ├── MainFrame$2.class
+│   ├── MainFrame$3.class
+│   ├── MainFrame$4.class
+│   ├── MainFrame$5.class
+│   ├── MainFrame.class
+│   ├── Money.class
+│   ├── ObjectRendered.class
+│   ├── Sprite.class
+│   ├── StudentGenerator.class
+│   ├── Text.class
+│   └── Timer.class
+├── screens
+│   ├── Background.class
+│   ├── Gameplay$1.class
+│   └── Gameplay.class
+└── University.class
 ```
