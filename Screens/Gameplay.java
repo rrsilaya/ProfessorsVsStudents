@@ -42,15 +42,16 @@ public class Gameplay extends Background {
 
 	private Background pauseMenu;
 
+	private String playerName;
 	private boolean mouseDragged;
 	private int mouseX, mouseY;
 
-	public Gameplay(MainFrame frame) {
+	public Gameplay(MainFrame frame, String playerName) {
 		super("Assets/UI/Gameplay/Background.jpg");
 
 		// Back-end Integration
 		this.university = new University(1);
-
+		this.playerName = playerName;
 		this.frame = frame;
 
 		// Element Layers
@@ -79,6 +80,10 @@ public class Gameplay extends Background {
 		this.renderStash();
 		
 		// this.repaint();
+	}
+
+	public String getPlayerName() {
+		return this.playerName;
 	}
 
 	private void renderStash() {
@@ -227,6 +232,10 @@ public class Gameplay extends Background {
 
 	public void resume() {
 		this.university.togglePause();
+		this.renderProfessors();
+		this.renderKwatro();
+		this.renderStudents();
+		this.repaint();
 	}
 
 	public void end() {
